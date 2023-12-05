@@ -1,0 +1,84 @@
+@import "./normalize.css";
+
+.profile-container {
+  min-height: 100vh;
+  background-color: #f0f3f4;
+}
+
+.profile-header {
+  height: 60px;
+  background-color: #efe2e2;
+}
+
+/* section avatar */
+.profile-section-avatar {
+  background-color: #ffffff;
+  height: 220px;
+  box-shadow: 0px 1px 2px #3335;
+}
+
+.profile-section-avatar-image {
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+}
+
+.profile-section-avatar-username {
+  font-size: 19px;
+}
+
+.profile-section-avatar-friends {
+  font-size: 14px;
+}
+
+/* section content */
+.profile-section-content {
+  margin-top: 33px;
+}
+
+/* col friends */
+.profile-section-content-friends {
+}
+
+.profile-section-content-friends-background {
+  background-color: #ffffff;
+  box-shadow: 0px 1px 2px #3335;
+}
+
+.profile-section-content-friends-heading {
+  margin-top: 4px;
+  margin-bottom: 8px;
+  margin-left: 8px;
+}
+
+.profile-section-content-friends-heading-friend {
+  font-size: 13.5px;
+}
+
+.profile-section-content-friends-heading-numberOfFriend {
+  font-size: 10.5px;
+}
+
+.profile-section-content-friends-friend-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -ms-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+}
+
+/* col post */
+.profile-section-content-posts-background {
+  box-shadow: 0px 1px 2px #3335;
+}
+
+.profile-section-content-posts-heading {
+  margin-top: 4px;
+  margin-bottom: 8px;
+  margin-left: 8px;
+}
+
+.profile-section-content-posts-heading-text {
+  font-size: 13.5px;
+}
+
