@@ -9,8 +9,10 @@ import org.springframework.util.ObjectUtils;
 
 import com.example.SilkRoad.Model.Role;
 import com.example.SilkRoad.Model.User;
+import com.example.SilkRoad.Model.Userdetail;
 import com.example.SilkRoad.Repository.RoleRepository;
 import com.example.SilkRoad.Repository.UserRepository;
+import com.example.SilkRoad.Repository.UserdetailRepository;
 import com.example.SilkRoad.Service.UserServiceInterface;
 import com.example.SilkRoad.requestDTO.RegisterUserDTO;
 
@@ -24,6 +26,8 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class UserService implements UserServiceInterface {
     private final UserRepository userRepository;
+    private final UserdetailRepository userdetailRepository;
+
     private final RoleRepository roleRepository;
 
     @Autowired
@@ -49,11 +53,14 @@ public class UserService implements UserServiceInterface {
         validateAccount(user);
 
         User newuser = addUser(user);
+        Userdetail userdetail = addUserdetail();
 
         try {
-            userRepository.save(newuser);
+            User UserSaved = userRepository.save(newuser);
+            userdetail.setId(UserSaved.getId());
+            userdetailRepository.save(userdetail);
         } catch (Exception e) {
-            throw new RuntimeException("Error when register user");
+            throw new RuntimeException(e.getMessage());
         }
     }
 
@@ -94,6 +101,16 @@ public class UserService implements UserServiceInterface {
         return newuser;
     }
 
+    public Userdetail addUserdetail() {
+        Userdetail userdetail = new Userdetail();
+        userdetail.setWorkAt("No data");
+        userdetail.setLiveAt("No data");
+        userdetail.setSchool("No data");
+        userdetail.setRelation(0);
+
+        return userdetail;
+    }
+
     private void validateAccount(RegisterUserDTO user) {
         if (ObjectUtils.isEmpty(user)) {
             throw new IllegalArgumentException("Request data not found!");
@@ -121,4 +138,14 @@ public class UserService implements UserServiceInterface {
         }
 
     }
+
+    public User GetOneUserById(int userid) {
+        User user = userRepository.findById(userid).get();
+        return user;
+    }
+
+    public void UpdateUser(User user) {
+        userRepository.save(user);
+    }
+
 }

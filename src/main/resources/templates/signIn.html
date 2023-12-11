@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html
   lang="en"
-  xmlns="http://www.w3.org/1999/xhtml"
   xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  xmlns:sec="http://www.thymeleaf.org"
 >
   <head>
     <meta charset="UTF-8" />
@@ -46,7 +47,7 @@
               <form
                 th:action="@{/login}"
                 method="post"
-                th:object="${LoginUserDTO}"
+                th:object="${loginUserDTO}"
               >
                 <input
                   id="email"
@@ -70,7 +71,7 @@
                   th:errors="*{password}"
                 ></span>
                 <br />
-                <p th:if="${error}" th:text="${error}"></p>
+                <p th:if="${error}" th:text="${error}" style="color: red"></p>
                 <input id="login-btn" type="submit" value="Log In" /><br />
                 <a href="#">Forgotten password?</a><br />
                 <button id="create-btn">

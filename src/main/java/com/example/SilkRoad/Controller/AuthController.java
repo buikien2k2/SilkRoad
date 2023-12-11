@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.example.SilkRoad.Service.impl.UserService;
+import com.example.SilkRoad.Service.UserServiceInterface;
 import com.example.SilkRoad.requestDTO.LoginUserDTO;
 import com.example.SilkRoad.requestDTO.RegisterUserDTO;
 
@@ -28,7 +28,7 @@ public class AuthController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    private final UserService userService;
+    private final UserServiceInterface userService;
 
     // @PostMapping(value = { "/login" })
     // public String login(@RequestParam String email, @RequestParam String
@@ -50,7 +50,7 @@ public class AuthController {
         if (user != null) {
             return "redirect:/home";
         }
-        model.addAttribute("LoginUserDTO", new LoginUserDTO());
+        model.addAttribute("loginUserDTO", new LoginUserDTO());
         return "signIn";
     }
 
@@ -59,7 +59,7 @@ public class AuthController {
         try {
             if (bdResult.hasErrors()) {
                 bdResult.getAllErrors().forEach(error -> System.out.println(error));
-                return "redirect:/login";
+                return "signIn";
             }
 
             Authentication authentication = new UsernamePasswordAuthenticationToken(loginUserDTO.getEmail(),
@@ -71,11 +71,13 @@ public class AuthController {
             }
 
             // Nếu thất bại, trả về lỗi cho user
+            model.addAttribute("loginUserDTO", loginUserDTO);
             model.addAttribute("error", "Username hoặc password không chính xác.");
-            return "redirect:/login";
+            return "signIn";
         } catch (Exception e) {
-            model.addAttribute("error", e.getMessage());
-            return "redirect:/login";
+            model.addAttribute("loginUserDTO", loginUserDTO);
+            model.addAttribute("error", "Username hoặc password không chính xác.");
+            return "signIn";
         }
     }
 

@@ -6,10 +6,10 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
 
 import java.util.Date;
-
 import java.util.Set;
 
 @Entity
@@ -50,6 +50,7 @@ public class User {
     private String bio;
 
     @Column(name = "Birth")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birth;
     @Column(name = "Gender")
     private int gender; // 0: male, 1: female
@@ -68,7 +69,16 @@ public class User {
     private boolean credentialsNonExpired;
 
     // Set: các roles không trùng lặp
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id"))
     private Set<Role> roles;
+
+    @OneToOne(cascade = CascadeType.REMOVE)
+    @JoinTable(name = "userdetail", joinColumns = @JoinColumn(name = "id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id", referencedColumnName = "id"))
+    private Userdetail userdetail;
+
+    // @OneToMany
+    // @JoinTable(name = "friendship", joinColumns = @JoinColumn(name =
+    // "subscriber_id", referencedColumnName = "id"))
+    // private List<FriendShip> friendShips;
 }

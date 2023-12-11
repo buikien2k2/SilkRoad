@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 08, 2023 at 07:09 PM
+-- Generation Time: Dec 11, 2023 at 09:22 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -51,12 +51,19 @@ INSERT INTO `comment` (`id`, `text`, `timestamp`, `post_id`, `commentImg`) VALUE
 --
 
 CREATE TABLE `friendship` (
-  `user_id` int(11) NOT NULL,
-  `subscriber_id` int(11) NOT NULL,
-  `status` int(1) NOT NULL,
-  `RequestTime` datetime NOT NULL,
-  `accept_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+  `id` int(11) NOT NULL,
+  `status` int(11) DEFAULT NULL,
+  `request_time` datetime DEFAULT NULL,
+  `subscriber_id` int(11) DEFAULT NULL,
+  `accept_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `friendship`
+--
+
+INSERT INTO `friendship` (`id`, `status`, `request_time`, `subscriber_id`, `accept_id`) VALUES
+(4, 1, '2023-12-12 03:06:22', 16, 17);
 
 -- --------------------------------------------------------
 
@@ -176,11 +183,19 @@ INSERT INTO `secure_token` (`id`, `time_stamp`, `token`, `user_id`) VALUES
 
 CREATE TABLE `userdetail` (
   `id` int(11) NOT NULL,
-  `WorkAt` text NOT NULL,
-  `LiveAt` text NOT NULL,
-  `School` text NOT NULL,
-  `Relation` int(1) NOT NULL
+  `live_at` varchar(255) DEFAULT NULL,
+  `relation` int(11) NOT NULL,
+  `school` varchar(255) DEFAULT NULL,
+  `work_at` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `userdetail`
+--
+
+INSERT INTO `userdetail` (`id`, `live_at`, `relation`, `school`, `work_at`) VALUES
+(16, 'No data 0', 1, 'No data', 'No data'),
+(17, 'No data', 0, 'No data', 'No data');
 
 -- --------------------------------------------------------
 
@@ -211,7 +226,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `email`, `name`, `password`, `is_enabled`, `avatar_name`, `coverImg`, `Phone`, `Bio`, `Birth`, `Gender`, `account_non_expired`, `account_non_locked`, `cover_img`, `credentials_non_expired`) VALUES
-(1, 'admin@admin.com', 'HKien', '$2a$06$8tOeV93mfGYXRAsDvkfc5eMEIdKelAXY3DCM.dp8apSwSjSxxDoDC', b'1', NULL, '0', 0, '0', '0000-00-00', 0, NULL, NULL, NULL, NULL),
+(1, 'admin@admin.com', 'HKien', '$2a$06$8tOeV93mfGYXRAsDvkfc5eMEIdKelAXY3DCM.dp8apSwSjSxxDoDC', b'1', NULL, '0', 0, '0', '0000-00-00', 0, b'1', b'1', NULL, b'1'),
 (2, 'user@user.com', 'User', '$2a$06$yl6YmzQZBkhJOw0.Zfsq7ek9T9Dru.wUI.9kwWqlfW.FD208D1lDy', b'1', NULL, '0', 0, '0', '0000-00-00', 0, NULL, NULL, NULL, NULL),
 (3, 'anton@anton.com', 'Anton', '$2a$06$5SQMCyk8A0YqNfHvi29.5eBKjl8k/GkFbl9dhHyVyJEdD6JHU7r8G', b'1', NULL, '0', 0, '0', '0000-00-00', 0, NULL, NULL, NULL, NULL),
 (4, 'olga@olga.com', 'Olga', '$2a$06$YB6cY41qxnUOiwL0xRIYQOJFCM5j94zl9hDINru.YL4apHbHQ5Fsq', b'1', NULL, '0', 0, '0', '0000-00-00', 0, NULL, NULL, NULL, NULL),
@@ -219,7 +234,8 @@ INSERT INTO `users` (`id`, `email`, `name`, `password`, `is_enabled`, `avatar_na
 (8, 'mizuk1s4n@gmail.com', 'Kie', '$2a$06$DGzCevYntjm4FMwTBWbbBedLXWw/S1QrJopPyAq49bcklLDMJcDze', b'1', NULL, '0', 0, '0', '0000-00-00', 0, NULL, NULL, NULL, NULL),
 (9, 'kienai2k2@gmail.com', 'kienai', '$2a$06$QIELBzyoTGW169TyB.jH1OKdmRsB/sT1K7k0HGVk155MXsdXiR48G', b'1', NULL, '0', 0, '0', '0000-00-00', 0, NULL, NULL, NULL, NULL),
 (10, 'nhakhoahoctrungkien@gmail.com', 'kienai1', '$2a$06$NAVsl2fhqEWYhy0Y5k.dn.hNjp9GaUPuyIZBtGtDde4msqex4.RHS', b'1', 'nhakhoahoctrungkien@gmail.com_51532.jpg', '0', 0, '0', '0000-00-00', 0, NULL, NULL, NULL, NULL),
-(11, 'kienphan6969@gmail.com', 'kien', '$2a$10$F..RxtZBOQVwXYgCRI2WD.MFMcoU4G898Cjzm4DumuKxvC7gH0nRq', b'1', '', NULL, NULL, '', '2020-02-26', 0, b'1', b'1', '', b'1');
+(16, 'kienphan6969@gmail.com', 'kien', '$2a$10$2GhrtfUoWnBTF7coxeq1t.66.6jbMHt9HR5whinjyfextIIeyIhrK', b'1', '/img/avatar/1702265409731.jpg', NULL, NULL, '', '2020-02-26', 0, b'1', b'1', '/img/profileCover/1702267493717.jpg', b'1'),
+(17, 'kienphan696969@gmail.com', 'kien2', '$2a$10$Z628hS4W1PgJW2lBN79sVOBZ7bt..rSMSVOINj6nFom9STpR9.UPe', b'1', '/img/avatar/1702325313349.gif', NULL, NULL, '', '2020-02-26', 0, b'1', b'1', '/img/profileCover/1702325509758.jpg', b'1');
 
 -- --------------------------------------------------------
 
@@ -237,7 +253,8 @@ CREATE TABLE `user_role` (
 --
 
 INSERT INTO `user_role` (`user_id`, `role_id`) VALUES
-(11, 1);
+(16, 1),
+(17, 1);
 
 --
 -- Indexes for dumped tables
@@ -254,9 +271,9 @@ ALTER TABLE `comment`
 -- Indexes for table `friendship`
 --
 ALTER TABLE `friendship`
-  ADD PRIMARY KEY (`user_id`,`subscriber_id`) USING BTREE,
-  ADD KEY `subscriber_id_fk` (`subscriber_id`) USING BTREE,
-  ADD KEY `accept_id` (`accept_id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKqycn6th9tfax40x5yr8gygrry` (`subscriber_id`),
+  ADD KEY `FKbalhrbv93q1rngwfrdrl4ghaf` (`accept_id`);
 
 --
 -- Indexes for table `post`
@@ -304,7 +321,7 @@ ALTER TABLE `secure_token`
 -- Indexes for table `userdetail`
 --
 ALTER TABLE `userdetail`
-  ADD KEY `id` (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `users`
@@ -327,6 +344,12 @@ ALTER TABLE `user_role`
 -- AUTO_INCREMENT for table `comment`
 --
 ALTER TABLE `comment`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `friendship`
+--
+ALTER TABLE `friendship`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
@@ -357,7 +380,7 @@ ALTER TABLE `secure_token`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- Constraints for dumped tables
@@ -373,9 +396,8 @@ ALTER TABLE `comment`
 -- Constraints for table `friendship`
 --
 ALTER TABLE `friendship`
-  ADD CONSTRAINT `friendship_ibfk_1` FOREIGN KEY (`accept_id`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `subscriber_id_fk` FOREIGN KEY (`subscriber_id`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `FKbalhrbv93q1rngwfrdrl4ghaf` FOREIGN KEY (`accept_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `FKqycn6th9tfax40x5yr8gygrry` FOREIGN KEY (`subscriber_id`) REFERENCES `users` (`id`);
 
 --
 -- Constraints for table `post`
@@ -414,13 +436,13 @@ ALTER TABLE `secure_token`
 -- Constraints for table `userdetail`
 --
 ALTER TABLE `userdetail`
-  ADD CONSTRAINT `userdetail_ibfk_1` FOREIGN KEY (`id`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `FKrx76da2tv1lfprh950pgtgplm` FOREIGN KEY (`id`) REFERENCES `users` (`id`);
 
 --
 -- Constraints for table `user_role`
 --
 ALTER TABLE `user_role`
-  ADD CONSTRAINT `FKj345gk1bovqvfame88rcx7yyx` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `FKj345gk1bovqvfame88rcx7yyx` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `FKt7e7djp752sqn6w22i6ocqy6q` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`);
 COMMIT;
 
