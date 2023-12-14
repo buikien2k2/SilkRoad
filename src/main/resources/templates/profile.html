@@ -1462,14 +1462,9 @@
                       <input
                         type="email"
                         class="form-control"
-                        name="Email"
-                        th:field="*{Email}"
-                        th:value="${user.Email}"
+                        th:value="${user.email}"
+                        disabled
                       />
-                      <span
-                        th:if="${#fields.hasErrors('Email')}"
-                        th:errors="*{Email}"
-                      ></span>
                     </div>
                   </td>
                 </tr>
@@ -1483,13 +1478,13 @@
                         id="editProfilePhone"
                         name="Phone"
                         class="form-control"
-                        type="text"
-                        th:field="*{Phone}"
-                        th:value="${user.Phone}"
+                        type="number"
+                        th:field="*{phone}"
+                        th:value="${user.phone}"
                       />
                       <span
-                        th:if="${#fields.hasErrors('Phone')}"
-                        th:errors="*{Phone}"
+                        th:if="${#fields.hasErrors('phone')}"
+                        th:errors="*{phone}"
                       ></span>
                     </div>
                   </td>
@@ -1504,11 +1499,11 @@
                         <input
                           class="form-check-input ms-4"
                           type="radio"
-                          name="Gender"
+                          name="gender"
                           id="genderRadioMale"
-                          th:field="*{Gender}"
-                          th:checked="${user.Gender == 0}"
-                          value="1"
+                          th:field="*{gender}"
+                          th:checked="${user.getGender() == 0}"
+                          value="0"
                         />
                         <label class="form-check-label" for="genderRadioMale">
                           Nam
@@ -1518,19 +1513,19 @@
                         <input
                           class="form-check-input ms-4"
                           type="radio"
-                          name="Gender"
+                          name="gender"
                           id="genderRadioFemale"
-                          th:field="*{Gender}"
-                          th:checked="${user.Gender == 1}"
-                          value="2"
+                          th:field="*{gender}"
+                          th:checked="${user.getGender() == 1}"
+                          value="1"
                         />
                         <label class="form-check-label" for="genderRadioFemale">
                           Nữ
                         </label>
                       </div>
                       <span
-                        th:if="${#fields.hasErrors('Gender')}"
-                        th:errors="*{Gender}"
+                        th:if="${#fields.hasErrors('gender')}"
+                        th:errors="*{gender}"
                       ></span>
                     </div>
                   </td>
@@ -1544,13 +1539,14 @@
                       id="editProfileDateOfBirth"
                       class="form-control"
                       type="date"
-                      name="DateOfBirth"
-                      th:field="*{Birth}"
+                      name="birth"
+                      th:field="*{birth}"
+                      th:value="${user.birth}"
                     />
                   </td>
                   <span
-                    th:if="${#fields.hasErrors('Birth')}"
-                    th:errors="*{Birth}"
+                    th:if="${#fields.hasErrors('birth')}"
+                    th:errors="*{birth}"
                   ></span>
                 </tr>
                 <tr>

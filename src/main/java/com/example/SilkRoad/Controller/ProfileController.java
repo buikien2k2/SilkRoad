@@ -10,7 +10,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ResourceLoader;
+// import org.springframework.core.io.ResourceLoader;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -29,6 +29,7 @@ import com.example.SilkRoad.Model.Userdetail;
 import com.example.SilkRoad.Service.FriendShipServiceInterface;
 import com.example.SilkRoad.Service.UserServiceInterface;
 import com.example.SilkRoad.Service.UserdetailServiceInterface;
+import com.example.SilkRoad.requestDTO.EditProfileDTO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -42,7 +43,7 @@ public class ProfileController {
     @Autowired
     private FriendShipServiceInterface friendShipService;
 
-    private final ResourceLoader resourceLoader;
+    // private final ResourceLoader resourceLoader;
     private static final Path CURRENT_FOLDER = Paths.get(System.getProperty("user.dir"));
 
     @GetMapping("/profile/{userid}")
@@ -69,14 +70,21 @@ public class ProfileController {
     }
 
     @PostMapping("/profile/{userid}/edit")
-    public String EditUser(@PathVariable("userid") int userid, @Valid @ModelAttribute("user") User user,
+    public String EditUser(@PathVariable("userid") int userid, @Valid @ModelAttribute EditProfileDTO editProfileDTO,
             BindingResult result, Model model) {
         // System.out.println(result + " [user]");
         if (result.hasErrors()) {
             result.getAllErrors().forEach(error -> System.out.println(error));
             return "redirect:/profile/" + userid;
         }
-        user.setId(userid);
+
+        User user = usersService.GetOneUserById(userid);
+        user.setName(editProfileDTO.getName());
+        user.setPhone(editProfileDTO.getPhone());
+        user.setGender(editProfileDTO.getGender());
+        // user.setBirth(java.sql.Date.valueOf(editProfileDTO.getBirth()));
+        user.setBirth(editProfileDTO.getBirth());
+
         usersService.UpdateUser(user);
         return "redirect:/profile/" + userid;
     }
