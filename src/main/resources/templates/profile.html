@@ -134,7 +134,7 @@
                   height: auto;
                   padding: 4px;
                   color: white;
-                  background-color: cornflowerblue;
+                  background-color: #1877f2;
                 "
                 th:if="${friendship == null}"
               >
@@ -155,7 +155,7 @@
                   height: auto;
                   padding: 4px;
                   color: white;
-                  background-color: cornflowerblue;
+                  background-color: #1877f2;
                 "
                 th:if="${friendship != null and friendship.getUser1().getId() == userLoggedIn.id and friendship.FriendshipStatus == 0}"
               >
@@ -169,7 +169,7 @@
                   height: auto;
                   padding: 4px;
                   color: white;
-                  background-color: cornflowerblue;
+                  background-color: #1877f2;
                 "
                 th:if="${friendship != null and friendship.FriendshipStatus == 1}"
               >
@@ -190,11 +190,31 @@
                   height: auto;
                   padding: 4px;
                   color: white;
-                  background-color: cornflowerblue;
+                  background-color: #1877f2;
                 "
               >
                 <i class="fas fa-plus-circle"></i>
                 Accept Friend
+              </button>
+            </form>
+            <form
+              method="GET"
+              th:action="@{/friendship/remove/{userid}(userid=${user.id})}"
+              th:if="${friendship != null and friendship.getUser2().getId() == userLoggedIn.id and friendship.FriendshipStatus == 0}"
+            >
+              <button
+                type="submit"
+                style="
+                  width: auto;
+                  height: auto;
+                  padding: 4px;
+                  color: white;
+                  background-color: #1877f2;
+                  margin: 0 4px;
+                "
+              >
+                <i class="fas fa-trash"></i>
+                Cancel Request
               </button>
             </form>
           </div>
@@ -230,9 +250,9 @@
           </a>
         </ul>
 
-        <div class="nav-btn">
+        <!-- <div class="nav-btn">
           <i class="fas fa-ellipsis-h"></i>
-        </div>
+        </div> -->
       </nav>
     </section>
 
@@ -388,7 +408,6 @@
             <div class="at9-images">
               <div class="images-div" th:each="fr : ${friends}">
                 <img
-                  id="frind-image-1"
                   th:src="${fr.getAvatarName() ne '' ? fr.getAvatarName() : '/img/avatar/no-avatar.jpg'}"
                 />
                 <p>
@@ -1307,7 +1326,7 @@
               <h4>Bạn bè</h4>
             </a>
           </div>
-          <div class="friend-cover">
+          <!-- <div class="friend-cover">
             <div class="friends-search">
               <i class="search-icon"></i>
               <input type="text" class="search-input" placeholder="Tìm kiếm" />
@@ -1317,87 +1336,77 @@
               <button>Tìm bạn bè</button>
               <span class="thre-dto-btn fas fa-ellipsis-h"></span>
             </div>
-          </div>
+          </div> -->
         </div>
         <div class="friends-nav">
           <ul class="list-nav">
-            <li class="activ">Tất cả bạn bè</li>
-            <li>Sinh nhật</li>
-            <li>Tỉnh/Thành phố hiện tại</li>
-            <li>Quê quán</li>
-            <li>Đang theo dõi</li>
+            <li class="activ friend-nav-button" id="friend-nav-all-friends">
+              All friends
+            </li>
+            <li
+              class="friend-nav-button"
+              id="friend-nav-waiting-response"
+              th:if="${userLoggedIn.getId() == user.getId()}"
+            >
+              Waiting Response
+            </li>
+            <li
+              class="friend-nav-button"
+              id="friend-nav-waiting-response-self"
+              th:if="${userLoggedIn.getId() == user.getId()}"
+            >
+              Waiting for your response
+            </li>
           </ul>
         </div>
-        <div class="show-list">
-          <div class="friend-show">
+        <div class="show-list friend-nav-show-list" id="show-all-fr">
+          <div class="friend-show" th:each="fr : ${friends}">
             <div class="friend-show-info">
-              <img src="/img/avatar/6.jpg" alt="" />
-              <a href="">
-                <span class="friend-name">Huỳnh Hữu Trọng</span>
-                <span>23 bạn chung</span>
+              <img
+                th:src="${fr.getAvatarName() ne '' ? fr.getAvatarName() : '/img/avatar/no-avatar.jpg'}"
+                alt=""
+              />
+              <a th:href="@{/profile/{userId}(userId=${fr.id})}">
+                <span class="friend-name" th:text="${fr.getName()}"></span>
               </a>
             </div>
-            <span class="thre-dto-btn fas fa-ellipsis-h"></span>
           </div>
-          <div class="friend-show">
+        </div>
+        <div
+          class="show-list friend-nav-show-list"
+          id="show-waiting-response-friend"
+          style="display: none"
+          th:if="${userLoggedIn.getId() == user.getId()}"
+        >
+          <div class="friend-show" th:each="fr : ${friendsWaiting}">
             <div class="friend-show-info">
-              <img src="/img/avatar/3.jpg" alt="" />
-              <a href="">
-                <span class="friend-name">Phước Hảo Lê</span>
-                <span>23 bạn chung</span>
+              <img
+                th:src="${fr.getAvatarName() ne '' ? fr.getAvatarName() : '/img/avatar/no-avatar.jpg'}"
+                alt=""
+              />
+              <a th:href="@{/profile/{userId}(userId=${fr.id})}">
+                <span class="friend-name" th:text="${fr.getName()}"></span>
               </a>
             </div>
-            <span class="thre-dto-btn fas fa-ellipsis-h"></span>
           </div>
-          <div class="friend-show">
+        </div>
+        <!-- self -->
+        <div
+          class="show-list friend-nav-show-list"
+          id="show-waiting-response-self"
+          style="display: none"
+          th:if="${userLoggedIn.getId() == user.getId()}"
+        >
+          <div class="friend-show" th:each="fr : ${friendsWaitingSelf}">
             <div class="friend-show-info">
-              <img src="/img/avatar/4.jpg" alt="" />
-              <a href="">
-                <span class="friend-name">Nguyễn Tuấn Vũ</span>
-                <span>23 bạn chung</span>
+              <img
+                th:src="${fr.getAvatarName() ne '' ? fr.getAvatarName() : '/img/avatar/no-avatar.jpg'}"
+                alt=""
+              />
+              <a th:href="@{/profile/{userId}(userId=${fr.id})}">
+                <span class="friend-name" th:text="${fr.getName()}"></span>
               </a>
             </div>
-            <span class="thre-dto-btn fas fa-ellipsis-h"></span>
-          </div>
-          <div class="friend-show">
-            <div class="friend-show-info">
-              <img src="/img/avatar/5.jpg" alt="" />
-              <a href="">
-                <span class="friend-name">Bùi Thanh Bảo Kha</span>
-                <span>23 bạn chung</span>
-              </a>
-            </div>
-            <span class="thre-dto-btn fas fa-ellipsis-h"></span>
-          </div>
-          <div class="friend-show">
-            <div class="friend-show-info">
-              <img src="/img/avatar/2.jpg" alt="" />
-              <a href="">
-                <span class="friend-name">Huỳnh Hữu Trọng</span>
-                <span>23 bạn chung</span>
-              </a>
-            </div>
-            <span class="thre-dto-btn fas fa-ellipsis-h"></span>
-          </div>
-          <div class="friend-show">
-            <div class="friend-show-info">
-              <img src="/img/avatar/1.jpg" alt="" />
-              <a href="">
-                <span class="friend-name">Huỳnh Hữu Trọng</span>
-                <span>23 bạn chung</span>
-              </a>
-            </div>
-            <span class="thre-dto-btn fas fa-ellipsis-h"></span>
-          </div>
-          <div class="friend-show">
-            <div class="friend-show-info">
-              <img src="/img/avatar/4.jpg" alt="" />
-              <a href="">
-                <span class="friend-name">Huỳnh Hữu Trọng</span>
-                <span>23 bạn chung</span>
-              </a>
-            </div>
-            <span class="thre-dto-btn fas fa-ellipsis-h"></span>
           </div>
         </div>
       </div>
@@ -1415,7 +1424,7 @@
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Chỉnh sửa thông tinModal title</h5>
+            <h5 class="modal-title">Chỉnh sửa thông tin</h5>
             <button
               type="button"
               class="close"
@@ -1779,6 +1788,16 @@
       id="hiddenInputUserLoggedInId"
       th:data-userloggedinid="${userLoggedIn.id}"
     />
+    <input
+      type="hidden"
+      id="hiddenInputUserLoggedIn"
+      th:value="${userLoggedIn}"
+    />
+    <script>
+      const userLoggedInId = "[[${userLoggedIn.id}]]";
+      const userLoggedInName = "[[${userLoggedIn.name}]]";
+      const userLoggedInAvatar = "[[${userLoggedIn.avatarName}]]";
+    </script>
     <script src="/js/profile.js"></script>
     <script src="/js/render.js"></script>
     <script>

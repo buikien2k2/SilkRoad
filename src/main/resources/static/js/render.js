@@ -72,15 +72,17 @@ function renderHeaderAndPost() {
             </div>
             <div class="user" id="profile-user">
                 <div class="profile" id="profile">
-                    <img src="/img/avatar/hero.png" alt="">
+                    <img src="${userLoggedInAvatar}" alt="">
                 </div>
                 <div class="dropdown-profile" id="dropdown-profile">
                     <ul>
                         <li class="profile-drop" id="profile-setting">
-                            <div class="profile" >
-                                <img src="/img/avatar/hero.png" alt="">
-                            </div>
-                            <h4>Bùi Kiên</h4>
+                            <a href="/profile/${userLoggedInId}" style="display: flex; width: 100%;">
+                                <div class="profile" >
+                                    <img src="${userLoggedInAvatar}" alt="">
+                                </div>
+                                <h4>${userLoggedInName}</h4>
+                            </a>
                         </li>
                         <li> 
                             <img src="/img/icons/gear-solid.svg" alt="">
@@ -105,7 +107,7 @@ function renderHeaderAndPost() {
                     </ul>
                 </div>
                 
-                <!-- <h4>Bùi Kiên</h4> -->
+                <!-- <h4>${userLoggedInName}</h4> -->
             </div>
         </div>
     </nav>
@@ -113,9 +115,9 @@ function renderHeaderAndPost() {
         <div class="nav-site-scroll">
             <div class="owner-profile">
                 <div class="profile" >
-                    <img src="/img/avatar/hero.png" alt="">
+                    <img src="${userLoggedInAvatar}" alt="">
                 </div>
-                <h4>Bùi Kiên</h4>
+                <h4>${userLoggedInName}</h4>
             </div>
             <div class="nav-btn">
                 <i class="fas fa-ellipsis-h"></i>
@@ -131,9 +133,9 @@ function renderHeaderAndPost() {
                     <header>Create Post</header>
                     <form action="#">
                         <div class="content">
-                            <img src="/img/avatar/hero.png" alt="logo" />
+                            <img src="${userLoggedInAvatar}" alt="logo" />
                             <div class="details">
-                                <p>Bùi Kiên</p>
+                                <p>${userLoggedInName}</p>
                                 <div class="privacy">
                                     <i class="fas fa-user-friends"></i>
                                     <span>Friends</span>
@@ -142,7 +144,7 @@ function renderHeaderAndPost() {
                             </div>
                         </div>
 
-                        <textarea placeholder="What's on your mind, Bùi Kiên?" spellcheck="false"></textarea>
+                        <textarea placeholder="What's on your mind, ${userLoggedInName}?" spellcheck="false"></textarea>
                         <div class="theme-emoji">
                             <img src="/img/icons2/theme.svg" alt="theme" />
                             <img src="/img/icons2/smile.svg" alt="smile" />
@@ -282,8 +284,8 @@ document.getElementById("profile").addEventListener("click", function () {
     document.getElementById("dropdown-profile").style.display = "none";
   }
 });
-document
-  .getElementById("profile-setting")
-  .addEventListener("click", function () {
-    window.location.href = "/profile.html";
-  });
+// document
+//   .getElementById("profile-setting")
+//   .addEventListener("click", function () {
+//     window.location.href = "/profile.html";
+//   });

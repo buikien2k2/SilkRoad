@@ -60,6 +60,15 @@ public class ProfileController {
         if (userLoggedIn.getId() != userid) {
             FriendShip friendShip = friendShipService.getFriendShipBy2Userid(userLoggedIn.getId(), userid);
             model.addAttribute("friendship", friendShip);
+        } else {
+            List<User> friendsWaiting = friendShipService.getUserByUser1AndFriendshipStatus(userLoggedIn.getId(),
+                    0);
+
+            List<User> friendsWaitingSelf = friendShipService.getUserByUser2AndFriendshipStatus(userLoggedIn.getId(),
+                    0);
+
+            model.addAttribute("friendsWaiting", friendsWaiting);
+            model.addAttribute("friendsWaitingSelf", friendsWaitingSelf);
         }
 
         model.addAttribute("userLoggedIn", userLoggedIn);

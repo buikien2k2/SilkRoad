@@ -41,6 +41,28 @@ public class FriendShipService implements FriendShipServiceInterface {
         return friendship.get();
     }
 
+    public List<User> getUserByUser1AndFriendshipStatus(int userid, int friendshipStatus) {
+        User user = userRepository.findById(userid).get();
+        List<FriendShip> friendships = friendshipRepository.findByUser1AndFriendshipStatus(user, friendshipStatus);
+
+        List<User> friends = new ArrayList<>();
+        for (FriendShip friendship : friendships) {
+            friends.add(friendship.getOtherUser(user));
+        }
+        return friends;
+    }
+
+    public List<User> getUserByUser2AndFriendshipStatus(int userid, int friendshipStatus) {
+        User user = userRepository.findById(userid).get();
+        List<FriendShip> friendships = friendshipRepository.findByUser2AndFriendshipStatus(user, friendshipStatus);
+
+        List<User> friends = new ArrayList<>();
+        for (FriendShip friendship : friendships) {
+            friends.add(friendship.getOtherUser(user));
+        }
+        return friends;
+    }
+
     public void requestFriend(int requestId, int user2Id) {
         User user1 = userRepository.findById(requestId).orElse(null);
         User user2 = userRepository.findById(user2Id).orElse(null);

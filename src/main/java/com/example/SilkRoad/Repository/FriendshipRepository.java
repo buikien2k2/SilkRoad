@@ -22,4 +22,11 @@ public interface FriendshipRepository extends JpaRepository<FriendShip, Integer>
     Optional<FriendShip> findByUserIds(@Param("user1") User user1, @Param("user2") User user2);
 
     Optional<FriendShip> findByUser1AndUser2(User user1, User user2);
+
+    @Query("SELECT f FROM FriendShip f WHERE f.user1 = ?1 AND f.FriendshipStatus = ?2")
+    List<FriendShip> findByUser1AndFriendshipStatus(User user1, int friendshipStatus);
+
+    @Query("SELECT f FROM FriendShip f WHERE f.user2 = ?1 AND f.FriendshipStatus = ?2")
+    List<FriendShip> findByUser2AndFriendshipStatus(User user2, int friendshipStatus);
+
 }

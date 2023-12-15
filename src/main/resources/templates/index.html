@@ -92,17 +92,20 @@
           </div>
           <div class="user" id="profile-user">
             <div class="profile" id="profile">
-              <img src="img/avatar/hero.png" alt="" />
+              <img th:src="${user.getAvatarName()}" alt="" />
             </div>
             <div class="dropdown-profile" id="dropdown-profile">
               <ul>
                 <li class="profile-drop" id="profile-setting">
-                  <a th:href="@{'/profile/' + ${user.id}}">
+                  <a
+                    th:href="@{'/profile/' + ${user.id}}"
+                    style="display: flex; width: 100%"
+                  >
                     <div class="profile">
-                      <img src="img/avatar/hero.png" alt="" />
+                      <img th:src="${user.getAvatarName()}" alt="" />
                     </div>
+                    <h4 th:text="${user.name}"></h4>
                   </a>
-                  <h4 th:text="${user.name}"></h4>
                 </li>
                 <li>
                   <img src="img/icons/gear-solid.svg" alt="" />
@@ -138,7 +141,7 @@
           <div class="menu-item">
             <div class="user">
               <div class="profile">
-                <img src="img/avatar/hero.png" alt="" />
+                <img th:src="${user.getAvatarName()}" alt="" />
               </div>
               <h4>Bùi Kiên</h4>
             </div>
@@ -268,7 +271,7 @@
                 </div>
               </div>
               <div class="story-image">
-                <img src="img/avatar/hero.png" alt="" />
+                <img th:src="${user.getAvatarName()}" alt="" />
               </div>
             </div>
             <!---->
@@ -356,7 +359,7 @@
             <div class="input">
               <div class="user">
                 <div class="profile">
-                  <img src="img/avatar/hero.png" alt="" />
+                  <img th:src="${user.getAvatarName()}" alt="" />
                 </div>
               </div>
               <input
@@ -407,7 +410,7 @@
               <div class="item">
                 <div class="user">
                   <div class="profile">
-                    <img src="img/avatar/hero.png" alt="" />
+                    <img th:src="${user.getAvatarName()}" alt="" />
                   </div>
                 </div>
               </div>
@@ -549,7 +552,11 @@
               <div class="comment-box" id="comment-box">
                 <div class="comment-container">
                   <div class="comment">
-                    <img src="img/avatar/hero.png" alt="" class="comment-img" />
+                    <img
+                      th:src="${user.getAvatarName()}"
+                      alt=""
+                      class="comment-img"
+                    />
                     <div class="comment-text">
                       <div class="comment-header">
                         <p><strong>Bùi Kiên</strong></p>
@@ -577,7 +584,7 @@
               <div class="write-comment">
                 <div class="user">
                   <div class="profile">
-                    <img src="img/avatar/hero.png" alt="" />
+                    <img th:src="${user.getAvatarName()}" alt="" />
                   </div>
                 </div>
                 <div class="input">
@@ -805,7 +812,7 @@
               <header>Create Post</header>
               <form action="#">
                 <div class="content">
-                  <img src="img/avatar/hero.png" alt="logo" />
+                  <img th:src="${user.getAvatarName()}" alt="logo" />
                   <div class="details">
                     <p>Bùi Kiên</p>
                     <div class="privacy">

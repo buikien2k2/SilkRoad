@@ -15,4 +15,8 @@ public interface FriendShipServiceInterface {
     void acceptFriend(int user1Id, int acceptId);
 
     void removeFriendship(int user1Id, int user2Id);
+
+    List<User> getUserByUser2AndFriendshipStatus(int userid, int friendshipStatus);
+
+    List<User> getUserByUser1AndFriendshipStatus(int userid, int friendshipStatus);
 }

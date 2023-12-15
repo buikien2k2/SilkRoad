@@ -1,6 +1,4 @@
 const userId = document.getElementById("hiddenInputUserId").dataset.userid;
-const userLoggedInId = document.getElementById("hiddenInputUserLoggedInId")
-  .dataset.userloggedinid;
 
 let lcs_btn_i = document.querySelector(".lcs-btn_i");
 let post_icon_btn_i = document.querySelector("#post-icon-btn_i");
@@ -196,33 +194,38 @@ lock_btn.addEventListener("click", function () {
 // });
 
 let edit_bio_btn = document.getElementById("edit-bio-btn");
-edit_bio_btn.addEventListener("click", function () {
-  window.location.href = "/editProfileDetail.html";
-});
+if (edit_bio_btn != null) {
+  edit_bio_btn.addEventListener("click", function () {
+    window.location.href = "/editProfileDetail.html";
+  });
+}
 ///////////////////////////////////////////////////////////////////////////
 let changeCoverImageInput = document.getElementById("changeCoverImageInput");
-let coverImageElement = document.getElementById("coverImageElement");
-let coverImage = document.getElementById("cover-image-section");
-function handleChangeCoverImageButtonClick() {
-  changeCoverImageInput.click();
-}
-changeCoverImageInput.addEventListener("change", function () {
-  if (changeCoverImageInput.files.length > 0) {
-    const file = changeCoverImageInput.files[0];
-    const objectURL = URL.createObjectURL(file);
-    coverImageElement.src = objectURL;
-    coverImageElement.style.display = "block";
-    coverImage.classList.add("activ-show");
 
-    var formData = new FormData();
-    formData.append("file", file);
-
-    fetch(`/profile/uploadCoverImg/${userId}`, {
-      method: "POST",
-      body: formData,
-    });
+if (changeCoverImageInput != null) {
+  let coverImageElement = document.getElementById("coverImageElement");
+  let coverImage = document.getElementById("cover-image-section");
+  function handleChangeCoverImageButtonClick() {
+    changeCoverImageInput.click();
   }
-});
+  changeCoverImageInput.addEventListener("change", function () {
+    if (changeCoverImageInput.files.length > 0) {
+      const file = changeCoverImageInput.files[0];
+      const objectURL = URL.createObjectURL(file);
+      coverImageElement.src = objectURL;
+      coverImageElement.style.display = "block";
+      coverImage.classList.add("activ-show");
+
+      var formData = new FormData();
+      formData.append("file", file);
+
+      fetch(`/profile/uploadCoverImg/${userId}`, {
+        method: "POST",
+        body: formData,
+      });
+    }
+  });
+}
 ////////////////////////////////////////////////////////////////
 let changeAvatarImageInput = document.getElementById("changeAvatarImageInput");
 let avatarImageElement = document.getElementById("Profile_Avatar");
@@ -291,6 +294,59 @@ function navClick(btnPost, btnFriends, tab1, tab3) {
 }
 
 navClick(btnPost, btnFriends, tab1, tab3);
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+const btnAllFriendsInFrNav = document.getElementById("friend-nav-all-friends");
+const btnWaitingResInFrNav = document.getElementById(
+  "friend-nav-waiting-response"
+);
+const btnWaitingResSelfInFrNav = document.getElementById(
+  "friend-nav-waiting-response-self"
+);
+
+const listAllFrEle = document.getElementById("show-all-fr");
+const listWaitingResEle = document.getElementById(
+  "show-waiting-response-friend"
+);
+const listWaitingSelfEle = document.getElementById(
+  "show-waiting-response-self"
+);
+
+function handleButtonFrNavClick(buttonElement, listElement) {
+  const otherButtons = document.querySelectorAll(".friend-nav-button");
+  for (const otherButton of otherButtons) {
+    if (otherButton !== buttonElement) {
+      otherButton.classList.remove("activ");
+    }
+  }
+  buttonElement.classList.add("activ");
+
+  const otherLists = document.querySelectorAll(".friend-nav-show-list");
+  for (const otherList of otherLists) {
+    if (otherList !== listElement) {
+      otherList.style.display = "none";
+    }
+  }
+  listElement.style.display = "block";
+}
+
+// Gán event listener cho các button
+btnAllFriendsInFrNav.addEventListener("click", () =>
+  handleButtonFrNavClick(btnAllFriendsInFrNav, listAllFrEle)
+);
+
+if (btnWaitingResInFrNav != null) {
+  btnWaitingResInFrNav.addEventListener("click", () =>
+    handleButtonFrNavClick(btnWaitingResInFrNav, listWaitingResEle)
+  );
+}
+
+if (btnWaitingResSelfInFrNav != null) {
+  btnWaitingResSelfInFrNav.addEventListener("click", () =>
+    handleButtonFrNavClick(btnWaitingResSelfInFrNav, listWaitingSelfEle)
+  );
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////
 comment_inputs = document.querySelectorAll(".input input");
 
