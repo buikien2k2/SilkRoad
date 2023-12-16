@@ -21,83 +21,77 @@
   </head>
   <style>
     #fileInputContainer {
-        display: none;
-        position: fixed;
-        top: 55%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background-color: #3A3B3C;
-        border: 1px solid #585656;
-        border-radius: 5px;
-        padding: 20px 5px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        width: 451px;
-        height: 100px;
-        z-index: 999;
-
+      display: none;
+      position: fixed;
+      top: 55%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #3a3b3c;
+      border: 1px solid #585656;
+      border-radius: 5px;
+      padding: 20px 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 451px;
+      height: 100px;
+      z-index: 999;
     }
     #fileInputContainer input[type="file"] {
-        display: none;
+      display: none;
     }
 
     #fileInputContainer label {
-
-        color: #fff;
-        padding: 10px 15px;
-        border-radius: 5px;
-        cursor: pointer;
-        display: inline-block;
-        transition: background-color 0.3s;
-        background: #8a8888;
-        width: 98%;
-        height: 135%;
-        margin-top: -10px;
-        margin-left: 5px;
-        position: relative;
-        z-index: 1;
-
+      color: #fff;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      display: inline-block;
+      transition: background-color 0.3s;
+      background: #8a8888;
+      width: 98%;
+      height: 135%;
+      margin-top: -10px;
+      margin-left: 5px;
+      position: relative;
+      z-index: 1;
     }
 
     #fileInputContainer label:hover {
-        background-color: #365899;
+      background-color: #365899;
     }
 
     #fileInputContainer img {
-        margin-right: 10px;
-        width: 385px;
-        height: 20px;
-        color: #4c4c4d;
+      margin-right: 10px;
+      width: 385px;
+      height: 20px;
+      color: #4c4c4d;
     }
 
     #fileInputContainer span {
-        font-weight: bold;
-        margin-left: 98px;
-        color: #E4E6EA;
+      font-weight: bold;
+      margin-left: 98px;
+      color: #e4e6ea;
     }
-    #closeimage{
-        float: right;
-        cursor: pointer;
-        font-weight: bold;
-        color: #ccc;
-        transition: color 0.3s;
-        margin-top: -18px;
-        border-radius: 50%;
-        background: #323436;
-        padding: 0px 5px;
-        font-size: 14px;
-        position: absolute;
-        top: 20px;
-        right: 2px;
-        z-index: 2;
+    #closeimage {
+      float: right;
+      cursor: pointer;
+      font-weight: bold;
+      color: #ccc;
+      transition: color 0.3s;
+      margin-top: -18px;
+      border-radius: 50%;
+      background: #323436;
+      padding: 0px 5px;
+      font-size: 14px;
+      position: absolute;
+      top: 20px;
+      right: 2px;
+      z-index: 2;
     }
 
     #closeimage:hover {
-        background: #8a8888
+      background: #8a8888;
     }
-
-
-
-</style>
+  </style>
 
   <body>
     <div id="header">
@@ -549,7 +543,10 @@
             </div>
           </div>
           <!--post container-->
-          <div th:each="post : ${posts}" class="view view-post-container smaller-margin">
+          <div
+            th:each="post : ${posts}"
+            class="view view-post-container smaller-margin"
+          >
             <div class="view-post">
               <div class="upper">
                 <div class="d-flex">
@@ -561,7 +558,9 @@
 
                   <div class="info">
                     <h6 class="name" th:text="${user.name}"></h6>
-                    <span th:text="${ post.getElapsedTimeInMinutes() + ' minutes ago'}"></span>
+                    <span
+                      th:text="${ post.getElapsedTimeInMinutes() + ' minutes ago'}"
+                    ></span>
                     <span><i class="fas fa-user-friends"></i></span>
                   </div>
                 </div>
@@ -572,11 +571,15 @@
               </div>
 
               <div class="desc">
-                <<p th:text="${post.text}">aaaaa</p>
+                <p th:text="${post.text}">aaaaa</p>
               </div>
 
               <div class="post-img">
-                <img th:if="${post.getBase64Image() != null}" th:src="'data:image/jpeg;base64,' + ${post.getBase64Image()}" alt="Hình ảnh bài viết">
+                <img
+                  th:if="${post.getBase64Image() != null}"
+                  th:src="'data:image/jpeg;base64,' + ${post.getBase64Image()}"
+                  alt="Hình ảnh bài viết"
+                />
               </div>
 
               <div class="emojis-comment">
@@ -889,7 +892,12 @@
             <section class="post">
               <span class="close" id="closeButton">&times;</span>
               <header>Create Post</header>
-              <form th:object="${post}" th:action="@{home/save(userid=${user.id})}" method="post" enctype="multipart/form-data">
+              <form
+                th:object="${post}"
+                th:action="@{/home/save/{userid}(userid=17)}"
+                method="post"
+                enctype="multipart/form-data"
+              >
                 <div class="content">
                   <img th:src="${user.getAvatarName()}" alt="logo" />
                   <div class="details">
@@ -902,25 +910,37 @@
                   </div>
                 </div>
 
-                <textarea placeholder="What's on your mind, Bùi Kiên?" ></textarea>
+                <textarea
+                  placeholder="What's on your mind, Bùi Kiên?"
+                  spellcheck="false"
+                  th:field="*{text}"
+                ></textarea>
                 <div class="theme-emoji">
                   <img src="img/icons2/theme.svg" alt="theme" />
                   <img src="img/icons2/smile.svg" alt="smile" />
                 </div>
-                <div id="fileInputContainer" style="display:none;">
-                                <span id="closeimage" onclick="closeFileInputContainer()">X</span>
-                                <label for="image">
-                                    <img th:src="@{/img/icons2/gallery.svg}" alt="gallery">
-                                    <br>
-                                    <span>Choose a photo or video</span>
-                                </label>
+                <div id="fileInputContainer" style="display: none">
+                  <span id="closeimage" onclick="closeFileInputContainer()"
+                    >X</span
+                  >
+                  <label for="image">
+                    <img th:src="@{/img/icons2/gallery.svg}" alt="gallery" />
+                    <br />
+                    <span>Choose a photo or video</span>
+                  </label>
 
-                                <input type="file" id="image" name="image" accept="image/*">
-                            </div>
+                  <input type="file" id="image" name="image" accept="image/*" />
+                </div>
                 <div class="options">
                   <p>Add to Your Post</p>
                   <ul class="list">
-                    <li><img th:src="@{/img/icons2/gallery.svg}" alt="gallery" onclick="toggleFileInput()" /></li>
+                    <li>
+                      <img
+                        th:src="@{/img/icons2/gallery.svg}"
+                        alt="gallery"
+                        onclick="toggleFileInput()"
+                      />
+                    </li>
                     <li><img src="img/icons2/tag.svg" alt="gallery" /></li>
                     <li><img src="img/icons2/emoji.svg" alt="gallery" /></li>
                     <li><img src="img/icons2/mic.svg" alt="gallery" /></li>
@@ -1001,43 +1021,48 @@
     </div>
 
     <script>
-        function toggleFileInput() {
-            var fileInputContainer = document.getElementById("fileInputContainer");
-            fileInputContainer.style.display = fileInputContainer.style.display === "none" ? "block" : "none";
-        }
+      function toggleFileInput() {
+        var fileInputContainer = document.getElementById("fileInputContainer");
+        fileInputContainer.style.display =
+          fileInputContainer.style.display === "none" ? "block" : "none";
+      }
     </script>
     <script>
-        function closeFileInputContainer() {
-            document.getElementById('fileInputContainer').style.display = 'none';
-        }
+      function closeFileInputContainer() {
+        document.getElementById("fileInputContainer").style.display = "none";
+      }
     </script>
 
     <script>
-        const container = document.querySelector(".container"),
-                privacy = container.querySelector(".post .privacy"),
-                arrowBack = container.querySelector(".audience .arrow-back");
-        // wrapper = document.querySelector(".wrapper"),
+      const container = document.querySelector(".container"),
+        privacy = container.querySelector(".post .privacy"),
+        arrowBack = container.querySelector(".audience .arrow-back");
+      // wrapper = document.querySelector(".wrapper"),
 
-        privacy.addEventListener("click", () => {
-            container.classList.add("show");
-            // wrapper.style.justifyContent = "none";
-        });
+      privacy.addEventListener("click", () => {
+        container.classList.add("show");
+        // wrapper.style.justifyContent = "none";
+      });
 
-        arrowBack.addEventListener("click", () => {
-            container.classList.remove("show");
-        });
-        const overlay = document.getElementById("overlay");
-        const btnClick = document.getElementById("addPost");
-        btnClick.addEventListener("click", () => {
-            overlay.style.display = "flex";
-        })
-        document.getElementById("overlay").addEventListener("click", function (e) {
-            if (e.target === document.getElementById("overlay")) {
-                overlay.style.display = "none";
-            }
-        });
-        document.getElementById("closeButton").addEventListener("click", function () {
+      arrowBack.addEventListener("click", () => {
+        container.classList.remove("show");
+      });
+      const overlay = document.getElementById("overlay");
+      const btnClick = document.getElementById("addPost");
+      btnClick.addEventListener("click", () => {
+        overlay.style.display = "flex";
+      });
+      document
+        .getElementById("overlay")
+        .addEventListener("click", function (e) {
+          if (e.target === document.getElementById("overlay")) {
             overlay.style.display = "none";
+          }
+        });
+      document
+        .getElementById("closeButton")
+        .addEventListener("click", function () {
+          overlay.style.display = "none";
         });
     </script>
     <!-- <script src="js/post.js"></script> -->
@@ -1047,5 +1072,3 @@
     <script src="js/index.js"></script>
   </body>
 </html>
-
-

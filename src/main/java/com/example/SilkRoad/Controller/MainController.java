@@ -21,16 +21,16 @@ public class MainController {
     @Autowired
     private UserServiceInterface userService;
 
-    @RequestMapping(value = { "/home" }, method = RequestMethod.GET)
-    public String home(@AuthenticationPrincipal UserDetails user, Model model) {
-        if (user == null) {
-            return "redirect:/login";
-        }
-        System.out.println(user.getUsername());
-        User userLoggedIn = userService.getUserByEmail(user.getUsername());
-        model.addAttribute("user", userLoggedIn);
-        return "index";
-    }
+    // @RequestMapping(value = { "/home" }, method = RequestMethod.GET)
+    // public String home(@AuthenticationPrincipal UserDetails user, Model model) {
+    // if (user == null) {
+    // return "redirect:/login";
+    // }
+    // System.out.println(user.getUsername());
+    // User userLoggedIn = userService.getUserByEmail(user.getUsername());
+    // model.addAttribute("user", userLoggedIn);
+    // return "index";
+    // }
 
     @GetMapping("/")
     public String index(@AuthenticationPrincipal UserDetails user) {
@@ -45,8 +45,8 @@ public class MainController {
         return "403";
     }
 
-    @GetMapping("/error")
-    public String error() {
-        return "error";
-    }
+    // @GetMapping("/error")
+    // public String error() {
+    // return "error";
+    // }
 }

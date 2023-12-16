@@ -14,7 +14,7 @@ public interface PostService {
 
     void savePost(Post post);
 
-    void deletePost(Long id);
+    void deletePost(int id);
 
-    Optional<Post> findPostById(Long id);
+    Optional<Post> findPostById(int id);
 }

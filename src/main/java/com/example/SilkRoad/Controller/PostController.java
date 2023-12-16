@@ -7,14 +7,18 @@ package com.example.SilkRoad.Controller;
 import lombok.RequiredArgsConstructor;
 
 import com.example.SilkRoad.Model.Post;
+import com.example.SilkRoad.Model.User;
 import com.example.SilkRoad.Repository.PostRepository;
 import com.example.SilkRoad.Service.PostService;
 import com.example.SilkRoad.Service.UserServiceInterface;
+import com.example.SilkRoad.requestDTO.SavePostDTO;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,17 +32,17 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 /**
  *
  * @author Acer
  */
 @Controller
-@RequestMapping("/home") // Thêm đường dẫn cơ sở cho PostController
 public class PostController {
 
     @Autowired
     private UserServiceInterface userService;
-    
+
     @Autowired
     private PostRepository postRepository;
 
@@ -47,8 +51,12 @@ public class PostController {
 
     @GetMapping("/home") // Đường dẫn cuối cùng là "/posts/home"
     public String index(@AuthenticationPrincipal UserDetails user, Model model) {
+        if (user == null) {
+            return "redirect:/login";
+        }
         List<Post> posts = (List<Post>) postRepository.findAll();
-        System.out.println(posts);
+        User userLoggedIn = userService.getUserByEmail(user.getUsername());
+        model.addAttribute("user", userLoggedIn);
         // Sort posts by creation time in descending order, handling null values
         posts.sort(Comparator.comparing(post -> post.getCreateTime(), Comparator.nullsLast(Comparator.reverseOrder())));
 
@@ -57,27 +65,40 @@ public class PostController {
         return "index";
     }
 
-    @PostMapping("/home/save")
-public String savePost(@AuthenticationPrincipal UserDetails user, @ModelAttribute("post") Post post,
-                       @RequestParam("image") MultipartFile image) throws IOException {
-    if (!image.isEmpty()) {
-        post.setPostImage(image.getBytes());
-    }
+    @PostMapping("/home/save/{userid}")
+    public String savePost(@AuthenticationPrincipal UserDetails user, @ModelAttribute("post") SavePostDTO post,
+            @RequestParam("image") MultipartFile image, @PathVariable("userid") int userid) throws IOException {
+        if (!image.isEmpty()) {
+            post.setPostImage(image.getBytes());
+        }
 
-    // Set the creation time to the current time
-    post.setCreateTime(LocalDateTime.now());
+        User userFromParam = userService.GetOneUserById(userid);
 
-    // Kiểm tra quyền của người dùng
-    if (user.getAuthorities().contains(new SimpleGrantedAuthority("USER"))) {
-        postService.savePost(post);
-    } else {
-        // Xử lý khi người dùng không có quyền
-        return "error"; // hoặc chuyển hướng đến trang lỗi nếu cần
-    }
+        Post newPost = new Post();
+        newPost.setCreateTime(LocalDateTime.now());
 
-    // Sử dụng đường dẫn tương đối trong trường hợp này
-    return "redirect:/home";
+        newPost.setText(post.getText());
 
+        if (post.getPostImage() != null) {
+            newPost.setPostImage(post.getPostImage());
+        }
+        newPost.setTag("Something");
+
+        if (post.getPostVideo() != null) {
+            newPost.setPostVideo(post.getPostVideo());
+        }
+
+        newPost.setUser(userFromParam);
+        // Kiểm tra quyền của người dùng
+        if (user.getAuthorities().contains(new SimpleGrantedAuthority("USER"))) {
+            postService.savePost(newPost);
+        } else {
+            // Xử lý khi người dùng không có quyền
+            return "error"; // hoặc chuyển hướng đến trang lỗi nếu cần
+        }
+
+        // Sử dụng đường dẫn tương đối trong trường hợp này
+        return "redirect:/home";
 
     }
 }

@@ -48,6 +48,8 @@ public class SecurityConfig {
                                                 .hasAuthority("ADMIN")
                                                 .antMatchers("/home/**")
                                                 .hasAuthority("USER")
+                                                .antMatchers("/home/save/**")
+                                                .hasAuthority("USER")
                                                 .antMatchers("/profile/**")
                                                 .hasAuthority("USER")
                                                 .antMatchers("/friendship/**")
