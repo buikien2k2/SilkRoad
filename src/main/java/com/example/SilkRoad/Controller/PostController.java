@@ -4,8 +4,6 @@
  */
 package com.example.SilkRoad.Controller;
 
-import lombok.RequiredArgsConstructor;
-
 import com.example.SilkRoad.Model.Post;
 import com.example.SilkRoad.Model.User;
 import com.example.SilkRoad.Repository.PostRepository;
@@ -27,11 +25,10 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
-import javax.validation.Valid;
+
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  *
@@ -67,7 +64,9 @@ public class PostController {
 
     @PostMapping("/home/save/{userid}")
     public String savePost(@AuthenticationPrincipal UserDetails user, @ModelAttribute("post") SavePostDTO post,
-            @RequestParam("image") MultipartFile image, @PathVariable("userid") int userid) throws IOException {
+            @RequestParam("image") MultipartFile image, @PathVariable("userid") int userid,
+            @RequestParam("from") String fromPage)
+            throws IOException {
         if (!image.isEmpty()) {
             post.setPostImage(image.getBytes());
         }
@@ -97,8 +96,17 @@ public class PostController {
             return "error"; // hoặc chuyển hướng đến trang lỗi nếu cần
         }
 
-        // Sử dụng đường dẫn tương đối trong trường hợp này
-        return "redirect:/home";
+        return "redirect:" + fromPage;
 
+    }
+
+    @GetMapping("/post/delete/{postid}")
+    public String deletePost(@AuthenticationPrincipal UserDetails user, @PathVariable("postid") int postid)
+            throws IOException {
+        User userLoggedIn = userService.getUserByEmail(user.getUsername());
+
+        postService.deletePost(postid);
+
+        return "redirect:/profile/" + userLoggedIn.getId();
     }
 }

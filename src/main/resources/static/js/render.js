@@ -125,13 +125,17 @@ function renderHeaderAndPost() {
         </div>
     </div>`;
   const newPost = `<div class="overlay1" id="overlay">
-    <div class="container">
+    <div class="container" style="padding-left: 0; padding-right: 0;">
         <div class="form-container">
             <div class="cover" id="wrapper">
                 <section class="post">
                     <span class="close" id="closeButton">&times;</span>
                     <header>Create Post</header>
-                    <form action="#">
+                    <form 
+                        action="/home/save/${userLoggedInId}?from=/profile/${userLoggedInId}"
+                        method="post"
+                        enctype="multipart/form-data"
+                    >
                         <div class="content">
                             <img src="${userLoggedInAvatar}" alt="logo" />
                             <div class="details">
@@ -144,15 +148,33 @@ function renderHeaderAndPost() {
                             </div>
                         </div>
 
-                        <textarea placeholder="What's on your mind, ${userLoggedInName}?" spellcheck="false"></textarea>
+                        <textarea name="text" placeholder="What's on your mind, ${userLoggedInName}?" spellcheck="false"></textarea>
                         <div class="theme-emoji">
                             <img src="/img/icons2/theme.svg" alt="theme" />
                             <img src="/img/icons2/smile.svg" alt="smile" />
                         </div>
-                        <div class="options">
+                        <div id="fileInputContainer" style="display: none">
+                            <span id="closeimage" onclick="closeFileInputContainer()"
+                                >X</span
+                            >
+                            <label for="image">
+                                <img src="/img/icons2/gallery.svg" alt="gallery" />
+                                <br />
+                                <span>Choose a photo or video</span>
+                            </label>
+
+                            <input type="file" id="image" name="image" accept="image/*" />
+                            </div>
+                            <div class="options">
                             <p>Add to Your Post</p>
                             <ul class="list">
-                                <li><img src="/img/icons2/gallery.svg" alt="gallery" /></li>
+                                <li>
+                                <img
+                                    src="/img/icons2/gallery.svg"
+                                    alt="gallery"
+                                    onclick="toggleFileInput()"
+                                />
+                                </li>
                                 <li><img src="/img/icons2/tag.svg" alt="gallery" /></li>
                                 <li><img src="/img/icons2/emoji.svg" alt="gallery" /></li>
                                 <li><img src="/img/icons2/mic.svg" alt="gallery" /></li>

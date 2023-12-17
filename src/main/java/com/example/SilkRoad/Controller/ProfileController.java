@@ -24,9 +24,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.SilkRoad.Model.FriendShip;
+import com.example.SilkRoad.Model.Post;
 import com.example.SilkRoad.Model.User;
 import com.example.SilkRoad.Model.Userdetail;
 import com.example.SilkRoad.Service.FriendShipServiceInterface;
+import com.example.SilkRoad.Service.PostService;
 import com.example.SilkRoad.Service.UserServiceInterface;
 import com.example.SilkRoad.Service.UserdetailServiceInterface;
 import com.example.SilkRoad.requestDTO.EditProfileDTO;
@@ -42,6 +44,8 @@ public class ProfileController {
     private UserdetailServiceInterface userdetailService;
     @Autowired
     private FriendShipServiceInterface friendShipService;
+    @Autowired
+    private PostService postService;
 
     // private final ResourceLoader resourceLoader;
     private static final Path CURRENT_FOLDER = Paths.get(System.getProperty("user.dir"));
@@ -56,6 +60,7 @@ public class ProfileController {
         User user = usersService.GetOneUserById(userid);
         Userdetail userdetail = userdetailService.GetOneUserById(userid);
         List<User> friends = friendShipService.getFriendsById(userid);
+        List<Post> posts = postService.findPostByUser(user);
 
         if (userLoggedIn.getId() != userid) {
             FriendShip friendShip = friendShipService.getFriendShipBy2Userid(userLoggedIn.getId(), userid);
@@ -75,6 +80,7 @@ public class ProfileController {
         model.addAttribute("user", user);
         model.addAttribute("userdetail", userdetail);
         model.addAttribute("friends", friends);
+        model.addAttribute("posts", posts);
         return "profile";
     }
 
