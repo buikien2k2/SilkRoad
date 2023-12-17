@@ -5,6 +5,7 @@
 package com.example.SilkRoad.Service.impl;
 
 import com.example.SilkRoad.Model.Post;
+import com.example.SilkRoad.Model.User;
 import com.example.SilkRoad.Repository.PostRepository;
 import com.example.SilkRoad.Service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,5 +37,11 @@ public class PostServiceImpl implements PostService {
     @Override
     public Optional<Post> findPostById(int id) {
         return postRepository.findById(id);
+    }
+
+    @Override
+    public List<Post> findPostByUser(User user) {
+        List<Post> posts = postRepository.findByUser(user);
+        return posts;
     }
 }

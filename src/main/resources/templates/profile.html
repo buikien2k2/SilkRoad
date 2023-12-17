@@ -30,6 +30,79 @@
   </head>
 
   <body>
+    <style>
+      #fileInputContainer {
+        display: none;
+        position: fixed;
+        top: 55%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #3a3b3c;
+        border: 1px solid #585656;
+        border-radius: 5px;
+        padding: 20px 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 451px;
+        height: 100px;
+        z-index: 999;
+      }
+      #fileInputContainer input[type="file"] {
+        display: none;
+      }
+
+      #fileInputContainer label {
+        color: #fff;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        display: inline-block;
+        transition: background-color 0.3s;
+        background: #8a8888;
+        width: 98%;
+        height: 135%;
+        margin-top: -10px;
+        margin-left: 5px;
+        position: relative;
+        z-index: 1;
+      }
+
+      #fileInputContainer label:hover {
+        background-color: #365899;
+      }
+
+      #fileInputContainer img {
+        margin-right: 10px;
+        width: 385px;
+        height: 20px;
+        color: #4c4c4d;
+      }
+
+      #fileInputContainer span {
+        font-weight: bold;
+        margin-left: 98px;
+        color: #e4e6ea;
+      }
+      #closeimage {
+        float: right;
+        cursor: pointer;
+        font-weight: bold;
+        color: #ccc;
+        transition: color 0.3s;
+        margin-top: -18px;
+        border-radius: 50%;
+        background: #323436;
+        padding: 0px 5px;
+        font-size: 14px;
+        position: absolute;
+        top: 20px;
+        right: 2px;
+        z-index: 2;
+      }
+
+      #closeimage:hover {
+        background: #8a8888;
+      }
+    </style>
     <div id="header"></div>
     <div class="popop-background"></div>
     <section id="cover-image-section" class="cover-image-section">
@@ -304,11 +377,6 @@
                   th:text="${userdetail.LiveAt}"
                 ></a>
               </li>
-
-              <!-- <li>
-                <i class="fas fa-map-marker-alt"></i> From
-                <a href="#">Thái Bình</a>
-              </li> -->
               <li>
                 <i class="fas fa-heart"></i>
                 <span
@@ -472,152 +540,158 @@
 
           <!-- ************ Post ************ -->
 
-          <div class="box-design post-div">
-            <div class="post-infarmation">
-              <div>
-                <div class="profil-ing-div post-profile-img">
-                  <a href="#" id="profile-link">
-                    <img id="Profile_images" src="/img/avatar/hero.png" />
-                  </a>
-                </div>
-              </div>
-              <div class="post-three-dot">
-                <h2><a href="#" id="profile_name">Bùi Kiên</a></h2>
-                <p>
-                  <a href="%">5d</a>
-                  <span>
-                    <i id="public-btn-i" class="fas fa-user-friends"></i>
-
-                    <div class="Select-audience">
-                      <div class="header-popap">
-                        <p class="h-pop">Select audience</p>
-                        <span id="popup-close-btn" class="fas fa-times"></span>
-                      </div>
-
-                      <div class="content-popaap">
-                        <ul>
-                          <li id="public-btn">
-                            <div class="icon-div">
-                              <i class="fas fa-globe-europe"></i>
-                            </div>
-                            <div class="text-aria">
-                              <h2>Public</h2>
-                              <p>Anyone on or off Facebook</p>
-                              <i id="public-li-icon" class="far fa-circle"></i>
-                            </div>
-                          </li>
-
-                          <li class="activ-li-div" id="friends-btn">
-                            <div class="icon-div">
-                              <i class="fas fa-user-friends frind-icon"></i>
-                            </div>
-                            <div class="text-aria">
-                              <h2>Friends</h2>
-                              <p>Your friends on Facebook</p>
-                              <i
-                                id="friends-li-icon"
-                                class="far fa-dot-circle activ-li-icon"
-                              ></i>
-                            </div>
-                          </li>
-
-                          <li id="lock-btn">
-                            <div class="icon-div">
-                              <i class="fas fa-lock"></i>
-                            </div>
-                            <div class="text-aria">
-                              <h2 class="onlu-me">Only Me</h2>
-                              <i id="lock-li-icon" class="far fa-circle"></i>
-                            </div>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </span>
-                </p>
-
-                <span class="thre-dto-btn fas fa-ellipsis-h"></span>
-              </div>
-            </div>
-
-            <p class="post-hader-text" id="post_h_T">Hello World.</p>
-            <img
-              id="post-image-12"
-              class="post-images"
-              src="/img/avatar/hero.png"
-            />
-
-            <div class="post-info-input">
-              <div class="lilowow-cs">
-                <div class="llw-count">
-                  <div class="icon-show top">
-                    <img src="/img/icons/wow.png" />
-                  </div>
-                  <div class="icon-show mid like-icon-bg">
-                    <i class="fas fa-thumbs-up"></i>
-                  </div>
-                  <div class="icon-show low love-icon-bg">
-                    <i class="fas fa-heart"></i>
-                  </div>
+          <div class="box-design post-div" th:each="post : ${posts}">
+            <div class="view-post">
+              <div
+                class="post-infarmation"
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                "
+              >
+                <div style="display: flex">
                   <div>
-                    <p class="l-count"><span>11</span></p>
+                    <div class="profil-ing-div post-profile-img">
+                      <a href="#" id="profile-link">
+                        <img
+                          id="Profile_images"
+                          th:src="${post.user.avatarName}"
+                        />
+                      </a>
+                    </div>
+                  </div>
+                  <div class="post-three-dot">
+                    <h2>
+                      <a
+                        href="#"
+                        id="profile_name"
+                        th:text="${post.user.getName()}"
+                        >Bùi Kiên</a
+                      >
+                    </h2>
+                    <div style="color: white; font-size: 10px">
+                      <a
+                        href="%"
+                        th:text="${post.getElapsedTimeInMinutes() + 'm'}"
+                        style="color: white"
+                        >5d</a
+                      >
+                      <span>
+                        <i id="public-btn-i" class="fas fa-user-friends"></i>
+                      </span>
+                    </div>
                   </div>
                 </div>
+                <form
+                  th:action="@{/post/delete/{postid}(postid=${post.id})}"
+                  method="get"
+                >
+                  <button
+                    type="submit"
+                    style="
+                      width: 20px;
+                      height: 20px;
+                      color: rgb(22, 22, 22);
+                      background-color: white;
+                      border-radius: 100%;
+                      padding: 2px;
+                      font-size: 14px;
+                    "
+                  >
+                    X
+                  </button>
+                </form>
+              </div>
 
-                <div>
+              <p class="post-hader-text" id="post_h_T" th:text="${post.text}">
+                Hello World.
+              </p>
+              <img
+                th:if="${post.getBase64Image() != null}"
+                id="post-image-12"
+                class="post-images"
+                th:src="'data:image/jpeg;base64,' + ${post.getBase64Image()}"
+                alt="Hinh anh bai viet"
+              />
+
+              <div class="post-info-input">
+                <div class="lilowow-cs">
+                  <div class="llw-count">
+                    <div class="icon-show top" style="display: flex">
+                      <img src="/img/icons/wow.png" />
+                    </div>
+                    <div class="icon-show mid like-icon-bg">
+                      <i class="fas fa-thumbs-up"></i>
+                    </div>
+                    <div class="icon-show low love-icon-bg">
+                      <i class="fas fa-heart"></i>
+                    </div>
+                    <div>
+                      <p class="l-count" style="margin-bottom: 0">
+                        <span>11</span>
+                      </p>
+                    </div>
+                  </div>
+
+                  <div>
+                    <p>
+                      <a href="#">1 Comments</a>
+
+                      <a href="#">1 Share</a>
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="actavite">
+                <div class="lcs-btn lcs-btn_i">
                   <p>
-                    <a href="#">1 Comments</a>
-
-                    <a href="#">1 Share</a>
+                    <i id="post-icon-btn_i" class="far fa-thumbs-up"></i>
+                    <span id="post-icon-text_i">Like</span>
                   </p>
                 </div>
+                <div class="lcs-btn">
+                  <p><i class="far fa-comment-alt"></i> Comment</p>
+                </div>
+                <div class="lcs-btn">
+                  <p><i class="fas fa-share"></i> Share</p>
+                </div>
               </div>
-            </div>
 
-            <div class="actavite">
-              <div class="lcs-btn lcs-btn_i">
-                <p>
-                  <i id="post-icon-btn_i" class="far fa-thumbs-up"></i>
-                  <span id="post-icon-text_i">Like</span>
-                </p>
-              </div>
-              <div class="lcs-btn">
-                <p><i class="far fa-comment-alt"></i> Comment</p>
-              </div>
-              <div class="lcs-btn">
-                <p><i class="fas fa-share"></i> Share</p>
-              </div>
-            </div>
+              <div
+                class="comment-box"
+                style="border-top: 1px solid #a8a6a633"
+                th:id="${post.id} + 'postcomments'"
+              ></div>
 
-            <div class="comment-site">
-              <div class="profil-ing-div">
-                <a href="#" id="profile-link">
-                  <img id="Profile_images" src="/img/avatar/hero.png" />
-                </a>
-              </div>
-              <div class="comment-input">
-                <input type="text" placeholder="Write a comment…" />
-                <div class="comment-icon-div">
-                  <div>
-                    <i class="far fa-grin-alt"></i>
-                  </div>
-                  <div>
-                    <i class="fas fa-camera"></i>
-                  </div>
-                  <div>
-                    <img src="images/icon/gif.jpg" />
-                  </div>
-                  <div>
-                    <img src="images/icon/sticer.jpg" />
+              <div class="comment-site">
+                <div class="profil-ing-div">
+                  <a href="#" id="profile-link">
+                    <img id="Profile_images" th:src="${user.avatarName}" />
+                  </a>
+                </div>
+                <div class="comment-input">
+                  <input
+                    type="text"
+                    placeholder="Write a comment…"
+                    th:data-cbid="${post.id} + 'postcomments'"
+                  />
+                  <div class="comment-icon-div">
+                    <div>
+                      <i class="far fa-grin-alt"></i>
+                    </div>
+                    <div>
+                      <i class="fas fa-camera"></i>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-
-          
-
-            
+        </section>
+      </div>
+    </section>
 
     <section class="friends-list" id="tab-3">
       <div class="friends-box">
@@ -627,17 +701,6 @@
               <h4>Bạn bè</h4>
             </a>
           </div>
-          <!-- <div class="friend-cover">
-            <div class="friends-search">
-              <i class="search-icon"></i>
-              <input type="text" class="search-input" placeholder="Tìm kiếm" />
-            </div>
-            <div class="search-btn">
-              <button>Lời mời kết bạn</button>
-              <button>Tìm bạn bè</button>
-              <span class="thre-dto-btn fas fa-ellipsis-h"></span>
-            </div>
-          </div> -->
         </div>
         <div class="friends-nav">
           <ul class="list-nav">
@@ -1041,48 +1104,6 @@
       </div>
     </div>
 
-    <!-- <input
-      th:if="${message != null}"
-      type="hidden"
-      id="hiddenInputMessage"
-      th:data-message="${messgae}"
-    />
-    <div
-      class="modal fade"
-      id="ProfileMessage"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="ProfileMessage"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Thông báo</h5>
-            <button
-              type="button"
-              class="close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <p id="ProfileMessage-message"></p>
-            <hr />
-            <button
-              type="submit"
-              class="btn btn-primary"
-              data-bs-dismiss="modal"
-            >
-              OK
-            </button>
-          </div>
-        </div>
-      </div>
-    </div> -->
-
     <input type="hidden" id="hiddenInputUserId" th:data-userid="${user.id}" />
     <input
       type="hidden"
@@ -1110,18 +1131,125 @@
         let date = e.target.value;
         editProfileDateOfBirth.innerText = date;
       });
+    </script>
 
-      // document.addEventListener("DOMContentLoaded", function () {
-      //   const messageModal = document.getElementById("ProfileMessage");
-      //   const messageElement = document.getElementById(
-      //     "ProfileMessage-message"
-      //   );
-      //   const messgaeFromHiddenInput =
-      //     document.getElementById("hiddenInputMessage").dataset.message;
+    <!-- comment -->
+    <script>
+      comment_inputs = document.querySelectorAll(".comment-input input");
 
-      //   messageModal.modal("show");
-      //   messageElement.textContent = messgaeFromHiddenInput;
-      // });
+      function makeComment(text, cbid) {
+        document.getElementById(`${cbid}`).innerHTML += `
+  <div class="" style="padding-top: 15px">
+                <div class="" style="display: flex">
+                  <img
+                    src="${userLoggedInAvatar}"
+                    alt=""
+                    style="
+                      width: 34px;
+                      height: 34px;
+                      border: none;
+                      border-radius: 50%;
+                      margin-left: 7px;
+                      margin-top: 5px;
+                      margin-right: 6px;
+                    "
+                  />
+                  <div
+                    style="
+                      background-color: var(--lighter);
+                      border: none;
+                      border-radius: 20px;
+                      padding: 13px;
+                      max-width: 500px;
+                      color: #fff;
+                    "
+                  >
+                    <div class="comment-header">
+                      <p style="font-size: 16px"><strong>${userLoggedInName}</strong></p>
+                    </div>
+                    <p>${text}</p>
+                  </div>
+                  <div class=""></div>
+                </div>
+                <div
+                  class="comment-lks"
+                  style="
+                    font-size: 14px;
+                    font-weight: bold;
+                    padding-left: 60px;
+                    color: rgb(120, 121, 122);
+                  "
+                >
+                  <p>
+                    <span>Like</span
+                    ><span
+                      class="dot"
+                      style="
+                        color: rgb(138, 141, 145);
+                        position: relative;
+                        top: -3px;
+                        text-decoration: none;
+                        cursor: text;
+                      "
+                    >
+                      .
+                    </span>
+                    <span>Reply</span
+                    ><span
+                      class="dot"
+                      style="
+                        color: rgb(138, 141, 145);
+                        position: relative;
+                        top: -3px;
+                        text-decoration: none;
+                        cursor: text;
+                      "
+                    >
+                      .
+                    </span>
+                    <span>Share</span
+                    ><span
+                      class="dot"
+                      style="
+                        color: rgb(138, 141, 145);
+                        position: relative;
+                        top: -3px;
+                        text-decoration: none;
+                        cursor: text;
+                      "
+                    >
+                      .
+                    </span>
+                    <span>Just now</span>
+                  </p>
+                </div>
+              </div>
+	`;
+      }
+
+      window.addEventListener("load", function () {
+        comment_inputs.forEach((input) => {
+          input.addEventListener("change", (e) => {
+            makeComment(input.value, input.dataset.cbid);
+            input.value = "";
+          });
+        });
+      });
+    </script>
+
+    <!-- post -->
+    <script>
+      function toggleFileInput() {
+        var fileInputContainer = document.getElementById("fileInputContainer");
+        fileInputContainer.style.display =
+          fileInputContainer.style.display === "none" ? "block" : "none";
+      }
+    </script>
+
+    <script>
+      function closeFileInputContainer() {
+        document.getElementById("fileInputContainer").style.display = "none";
+      }
     </script>
   </body>
 </html>

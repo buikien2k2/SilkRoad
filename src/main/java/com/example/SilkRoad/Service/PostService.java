@@ -5,6 +5,7 @@
 package com.example.SilkRoad.Service;
 
 import com.example.SilkRoad.Model.Post;
+import com.example.SilkRoad.Model.User;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,4 +18,6 @@ public interface PostService {
     void deletePost(int id);
 
     Optional<Post> findPostById(int id);
+
+    List<Post> findPostByUser(User user);
 }

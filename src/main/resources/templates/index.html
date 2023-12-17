@@ -437,7 +437,7 @@
               </div>
               <input
                 type="text"
-                placeholder="What on your mind, Bùi Kiên?"
+                th:placeholder="'What\'s on your mind, ' + ${user.name} + '?'"
                 name=""
                 id="addPost"
               />
@@ -552,12 +552,12 @@
                 <div class="d-flex">
                   <div class="user">
                     <div class="profile">
-                      <img th:src="${user.getAvatarName()}" alt="" />
+                      <img th:src="${post.user.getAvatarName()}" alt="" />
                     </div>
                   </div>
 
                   <div class="info">
-                    <h6 class="name" th:text="${user.name}"></h6>
+                    <h6 class="name" th:text="${post.user.name}"></h6>
                     <span
                       th:text="${ post.getElapsedTimeInMinutes() + ' minutes ago'}"
                     ></span>
@@ -574,9 +574,8 @@
                 <p th:text="${post.text}">aaaaa</p>
               </div>
 
-              <div class="post-img">
+              <div class="post-img" th:if="${post.getBase64Image() != null}">
                 <img
-                  th:if="${post.getBase64Image() != null}"
                   th:src="'data:image/jpeg;base64,' + ${post.getBase64Image()}"
                   alt="Hình ảnh bài viết"
                 />
@@ -631,8 +630,8 @@
                   <span> share </span>
                 </div>
               </div>
-              <div class="comment-box" id="comment-box">
-                <div class="comment-container">
+              <div class="comment-box" th:id="${post.id} + 'postcomments'">
+                <!-- <div class="comment-container">
                   <div class="comment">
                     <img
                       th:src="${user.getAvatarName()}"
@@ -661,7 +660,7 @@
                       <span>2 m</span>
                     </p>
                   </div>
-                </div>
+                </div> -->
               </div>
               <div class="write-comment">
                 <div class="user">
@@ -675,6 +674,7 @@
                     placeholder="Write a comment"
                     name=""
                     id=""
+                    th:data-cbid="${post.id} + 'postcomments'"
                   />
                   <div class="media">
                     <div class="icon">
@@ -894,7 +894,7 @@
               <header>Create Post</header>
               <form
                 th:object="${post}"
-                th:action="@{/home/save/{userid}(userid=17)}"
+                th:action="@{/home/save/{userid}?from=/home(userid=${user.id})}"
                 method="post"
                 enctype="multipart/form-data"
               >
@@ -911,7 +911,7 @@
                 </div>
 
                 <textarea
-                  placeholder="What's on your mind, Bùi Kiên?"
+                  th:placeholder="'What\'s on your mind, ' + ${user.name} + '?'"
                   spellcheck="false"
                   th:field="*{text}"
                 ></textarea>
@@ -1019,6 +1019,12 @@
         </div>
       </div>
     </div>
+
+    <script>
+      const userLoggedInId = "[[${user.id}]]";
+      const userLoggedInName = "[[${user.name}]]";
+      const userLoggedInAvatar = "[[${user.avatarName}]]";
+    </script>
 
     <script>
       function toggleFileInput() {

@@ -56,6 +56,8 @@ public class SecurityConfig {
                                                 .hasAuthority("USER")
                                                 .antMatchers("/post/**")
                                                 .hasAuthority("USER")
+                                                .antMatchers("/post/delete/**")
+                                                .hasAuthority("USER")
                                                 .antMatchers("/save/**")
                                                 .hasAuthority("USER")
                                                 // .antMatchers("/signUp*")

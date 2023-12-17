@@ -84,16 +84,16 @@ document.getElementById("profile").addEventListener("click", function () {
 // //////////////////////////////////////////////////////////////////////////////////////////
 comment_inputs = document.querySelectorAll(".input input");
 
-function makeComment(text) {
-  document
-    .querySelector(".view-post")
-    .querySelector(".comment-box").innerHTML += `
+console.log(comment_inputs);
+
+function makeComment(text, cbid) {
+  document.getElementById(`${cbid}`).innerHTML += `
 	<div class="comment-container">
 		<div class="comment">
-		<img src="img/avatar/hero.png" alt="" class="comment-img">
+		<img src="${userLoggedInAvatar}" alt="" class="comment-img">
 		<div class="comment-text">
 			<div class="comment-header">
-			<p><strong>Bùi Kiên</strong></p>
+			<p><strong>${userLoggedInName}</strong></p>
 			</div>
 			<p>${text}</p>
 		</div>
@@ -115,7 +115,7 @@ function makeComment(text) {
 window.addEventListener("load", function () {
   comment_inputs.forEach((input) => {
     input.addEventListener("change", (e) => {
-      makeComment(input.value);
+      makeComment(input.value, input.dataset.cbid);
       input.value = "";
     });
   });

@@ -37,7 +37,7 @@ public class Post {
     private String fileName;
 
     @Lob
-    @Column(name = "post_img", columnDefinition = "BLOB")
+    @Column(name = "post_img", columnDefinition = "LONGBLOB")
     @Nullable
     private byte[] postImage;
 
@@ -49,7 +49,7 @@ public class Post {
     @Nullable
     private LocalDateTime createTime;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
