@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  xmlns:sec="http://www.thymeleaf.org"
+  lang="en"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SilkRoad</title>
+    <link rel="icon" href="img/avatar/SilkRoad.jpg" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="css/post.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/owl.theme.default.css" />
+    <link rel="stylesheet" href="css/owl.carousel.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+  </head>
+  <style>
+    #fileInputContainer {
+        display: none;
+        position: fixed;
+        top: 55%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #3A3B3C;
+        border: 1px solid #585656;
+        border-radius: 5px;
+        padding: 20px 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 451px;
+        height: 100px;
+        z-index: 999;
+
+    }
+    #fileVideo {
+        display: none;
+        position: fixed;
+        top: 55%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #3A3B3C;
+        border: 1px solid #585656;
+        border-radius: 5px;
+        padding: 20px 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 451px;
+        height: 100px;
+        z-index: 999;
+
+    }
+    #fileVideo input[type="file"] {
+        display: none;
+    }
+    #fileInputContainer input[type="file"] {
+        display: none;
+    }
+
+    #fileInputContainer label {
+
+        color: #fff;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        display: inline-block;
+        transition: background-color 0.3s;
+        background: #8a8888;
+        width: 98%;
+        height: 135%;
+        margin-top: -10px;
+        margin-left: 5px;
+        position: relative;
+        z-index: 1;
+
+    }
+    #fileVideo label {
+
+        color: #fff;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        display: inline-block;
+        transition: background-color 0.3s;
+        background: #8a8888;
+        width: 98%;
+        height: 135%;
+        margin-top: -10px;
+        margin-left: 5px;
+        position: relative;
+        z-index: 1;
+
+    }
+
+    #fileInputContainer label:hover {
+        background-color: #365899;
+    }
+    #fileVideo label:hover {
+        background-color: #365899;
+    }
+
+    #fileInputContainer img {
+        margin-right: 10px;
+        width: 385px;
+        height: 20px;
+        color: #4c4c4d;
+    }
+    #fileVideo img {
+        margin-right: 10px;
+        width: 385px;
+        height: 20px;
+        color: #4c4c4d;
+    }
+
+    #fileInputContainer span {
+        font-weight: bold;
+        margin-left: 130px;
+        color: #E4E6EA;
+    }
+    #fileVideo span {
+        font-weight: bold;
+        margin-left: 130px;
+        color: #E4E6EA;
+    }
+    #closeimage{
+        float: right;
+        cursor: pointer;
+        font-weight: bold;
+        color: #ccc;
+        transition: color 0.3s;
+        margin-top: -18px;
+        border-radius: 50%;
+        background: #323436;
+        padding: 0px 5px;
+        font-size: 14px;
+        position: absolute;
+        top: 20px;
+        right: 2px;
+        z-index: 2;
+    }
+    #closevideo{
+        float: right;
+        cursor: pointer;
+        font-weight: bold;
+        color: #ccc;
+        transition: color 0.3s;
+        margin-top: -18px;
+        border-radius: 50%;
+        background: #323436;
+        padding: 0px 5px;
+        font-size: 14px;
+        position: absolute;
+        top: 20px;
+        right: 2px;
+        z-index: 2;
+    }
+
+    #closevideo:hover {
+        background: #8a8888
+    }
+    #closeimage:hover {
+        background: #8a8888
+    }
+    .post-img{
+        display: flex;
+        justify-content: center;
+    }
+  </style>
+
+  <body>
+    <div id="header">
+      <!--navbar-->
+      <nav>
+        <!--logo and search-->
+        <div class="left-side">
+          <div class="logo">
+            <a href="/">
+              <img src="img/avatar/SilkRoad.jpg" alt="" />
+            </a>
+          </div>
+
+          <div class="search">
+            <input type="text" placeholder="Search SilkRoad" name="" id="" />
+          </div>
+        </div>
+
+        <!--tab icons-->
+        <div class="tabs">
+          <div class="tab-icon active">
+            <div class="icon">
+              <img src="img/icons/home.svg" alt="" />
+            </div>
+          </div>
+
+          <div class="tab-icon">
+            <div class="icon has-notification">
+              <img src="img/icons/flag.svg" alt="" />
+            </div>
+          </div>
+
+          <div class="tab-icon">
+            <div class="icon">
+              <img src="img/icons/tv.svg" alt="" />
+            </div>
+          </div>
+
+          <div class="tab-icon">
+            <div class="icon">
+              <img src="img/icons/users.svg" alt="" />
+            </div>
+          </div>
+
+          <div class="tab-icon">
+            <div class="icon has-notification">
+              <img src="img/icons/calendar.svg" alt="" />
+            </div>
+          </div>
+        </div>
+
+        <!--right side-->
+        <div class="right-side">
+          <!--icons-->
+          <div class="user-icons">
+            <div class="icon">
+              <img src="img/icons/plus.svg" alt="" />
+            </div>
+
+            <div class="icon has-notification">
+              <img src=" img/icons/messenger.svg" alt="" />
+            </div>
+
+            <div class="icon">
+              <img src="img/icons/bell.svg" alt="" />
+            </div>
+
+            <div class="icon">
+              <img src="img/icons/arrow.svg" alt="" />
+            </div>
+          </div>
+          <div class="user" id="profile-user">
+            <div class="profile" id="profile">
+              <img th:src="${user.getAvatarName()}" alt="" />
+            </div>
+            <div class="dropdown-profile" id="dropdown-profile">
+              <ul>
+                <li class="profile-drop" id="profile-setting">
+                  <a
+                    th:href="@{'/profile/' + ${user.id}}"
+                    style="display: flex; width: 100%"
+                  >
+                    <div class="profile">
+                      <img th:src="${user.getAvatarName()}" alt="" />
+                    </div>
+                    <h4 th:text="${user.name}"></h4>
+                  </a>
+                </li>
+                <li>
+                  <img src="img/icons/gear-solid.svg" alt="" />
+                  <a href="">Cài đặt quyền riêng tư</a>
+                </li>
+                <li>
+                  <img src="img/icons/question-solid.svg" alt="" />
+                  <a href="">Trợ giúp & Hỗ trợ</a>
+                </li>
+                <li>
+                  <img src="img/icons/moon-solid.svg" alt="" />
+                  <a href="">Màn hình & trợ năng</a>
+                </li>
+                <li>
+                  <img src="img/icons/circle-exclamation-solid.svg" alt="" />
+                  <a href="">Đóng góp ý kiến</a>
+                </li>
+                <li>
+                  <img src="img/icons/right-from-bracket-solid.svg" alt="" />
+                  <a href="/logout">Đăng xuất</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+
+    <!--content-->
+    <div class="wrapper">
+      <div class="shortcuts">
+        <div class="first-col">
+          <div class="menu-item">
+            <div class="user">
+              <div class="profile">
+                <img th:src="${user.getAvatarName()}" alt="" />
+              </div>
+              <h4 th:text="${user.name}"></h4>
+            </div>
+          </div>
+
+          <div class="menu-item">
+            <div class="item-row">
+              <div class="icon">
+                <img src="img/icons/shield.svg" alt="" />
+              </div>
+              <h4>Security</h4>
+            </div>
+          </div>
+
+          <div class="menu-item">
+            <div class="item-row">
+              <div class="icon">
+                <img src="img/icons/colored-people.svg" alt="" />
+              </div>
+              <h4>Friends</h4>
+            </div>
+          </div>
+
+          <div class="menu-item">
+            <div class="item-row">
+              <div class="icon">
+                <img src="img/icons/colored-messenger.svg" alt="" />
+              </div>
+              <h4>Messenger</h4>
+            </div>
+          </div>
+
+          <div class="menu-item">
+            <div class="item-row">
+              <div class="icon">
+                <img src="img/icons/colored-flag.svg" alt="" />
+              </div>
+              <h4>Pages</h4>
+            </div>
+          </div>
+
+          <div class="menu-item">
+            <div class="item-row border">
+              <div class="icon more">
+                <img src="img/icons/arrow-down.svg" alt="" />
+              </div>
+              <h4>see more</h4>
+            </div>
+          </div>
+        </div>
+        <div class="second-col">
+          <h6 class="title">your shortcuts</h6>
+          <div class="menu-item">
+            <div class="item-row">
+              <div class="icon">
+                <img src="img/stories/st-1.jpeg" alt="" />
+              </div>
+              <h4>Designers house</h4>
+            </div>
+          </div>
+
+          <div class="menu-item">
+            <div class="item-row">
+              <div class="icon">
+                <img src="img/stories/st-2.jpeg" alt="" />
+              </div>
+              <h4>Script house</h4>
+            </div>
+            <div class="menu-item">
+              <div class="item-row">
+                <div class="icon">
+                  <img src="img/stories/page-1.jpg" alt="" />
+                </div>
+                <h4>ui ux Designers workshop</h4>
+              </div>
+            </div>
+
+            <div class="menu-item">
+              <div class="item-row">
+                <div class="icon">
+                  <img src="img/stories/st-3.jpeg" alt="" />
+                </div>
+                <h4>netflix movies recommends</h4>
+              </div>
+            </div>
+
+            <div class="menu-item">
+              <div class="item-row">
+                <div class="icon">
+                  <img src="img/stories/page-2.jpg" alt="" />
+                </div>
+                <h4>the futur</h4>
+              </div>
+            </div>
+
+            <div class="menu-item">
+              <div class="item-row">
+                <div class="icon">
+                  <img src="img/stories/page-3.jpeg" alt="" />
+                </div>
+                <h4>aj smart</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--posts-->
+      <div class="posts">
+        <!-- stories -->
+        <div class="stories">
+          <div class="owl-controls">
+            <div class="owl-nav">
+              <div class="controllers nxtBtn">
+                <img src="img/icons/arrow-right.svg" alt="" />
+              </div>
+            </div>
+          </div>
+          <div class="owl-carousel owl-theme slider">
+            <div class="item">
+              <div class="overlay first">
+                <div class="create">
+                  <div class="icon">
+                    <img src="img/icons/plus.svg" alt="" />
+                  </div>
+                  <span>Create a Story</span>
+                </div>
+              </div>
+              <div class="story-image">
+                <img th:src="${user.getAvatarName()}" alt="" />
+              </div>
+            </div>
+            <!---->
+
+            <div class="item">
+              <div class="overlay">
+                <div class="person">
+                  <div class="profile">
+                    <img src="img/avatar/2.jpg" alt="" />
+                  </div>
+                </div>
+                <h4>samantha john</h4>
+              </div>
+              <div class="story-image">
+                <img src="img/stories/st-2.jpeg" alt="" />
+              </div>
+            </div>
+            <!---->
+
+            <div class="item">
+              <div class="overlay">
+                <div class="person">
+                  <div class="profile">
+                    <img src="img/avatar/3.jpg" alt="" />
+                  </div>
+                </div>
+                <h4>Omar yassir</h4>
+              </div>
+              <div class="story-image">
+                <img src="img/stories/st-3.jpeg" alt="" />
+              </div>
+            </div>
+            <!---->
+
+            <div class="item">
+              <div class="overlay">
+                <div class="person">
+                  <div class="profile">
+                    <img src="img/avatar/4.jpg" alt="" />
+                  </div>
+                </div>
+                <h4>amanda cerny</h4>
+              </div>
+              <div class="story-image">
+                <img src="img/stories/st-4.jpg" alt="" />
+              </div>
+            </div>
+            <!---->
+
+            <div class="item">
+              <div class="overlay">
+                <div class="person">
+                  <div class="profile">
+                    <img src="img/avatar/5.jpg" alt="" />
+                  </div>
+                </div>
+                <h4>stacy lopez</h4>
+              </div>
+              <div class="story-image">
+                <img src="img/stories/st-1.jpeg" alt="" />
+              </div>
+            </div>
+            <!---->
+
+            <div class="item">
+              <div class="overlay">
+                <div class="person">
+                  <div class="profile">
+                    <img src="img/avatar/6.jpg" alt="" />
+                  </div>
+                </div>
+                <h4>joshua simon</h4>
+              </div>
+              <div class="story-image">
+                <img src="img/stories/st-1.jpeg" alt="" />
+              </div>
+            </div>
+            <!---->
+          </div>
+        </div>
+
+        <!--create post-->
+        <div class="timeline">
+          <div class="view create-post">
+            <div class="input">
+              <div class="user">
+                <div class="profile">
+                  <img th:src="${user.getAvatarName()}" alt="" />
+                </div>
+              </div>
+              <input
+                type="text"
+                th:placeholder="'What\'s on your mind, ' + ${user.name} + '?'"
+                name=""
+                id="addPost"
+              />
+            </div>
+            <div class="media">
+              <div class="category">
+                <div class="option">
+                  <div class="icon">
+                    <img src="img/icons/video-live.svg" alt="" />
+                  </div>
+                  <span>Live video</span>
+                </div>
+
+                <div class="option">
+                  <div class="icon">
+                    <img src="img/icons/photos.svg" alt="" />
+                  </div>
+                  <span>photo/video</span>
+                </div>
+
+                <div class="option">
+                  <div class="icon">
+                    <img src="img/icons/smile.svg" alt="" />
+                  </div>
+                  <span>feeling/activity</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="create-post view smaller-margin">
+            <div class="upper">
+              <div class="title">
+                <div class="icon">
+                  <img src="img/icons/video-room.svg" alt="" />
+                </div>
+                <span>Rooms</span>
+              </div>
+              <a href=""> create </a>
+            </div>
+
+            <div class="owl-carousel owl-theme rooms">
+              <div class="item">
+                <div class="user">
+                  <div class="profile">
+                    <img th:src="${user.getAvatarName()}" alt="" />
+                  </div>
+                </div>
+              </div>
+              <!---->
+
+              <div class="item">
+                <div class="user">
+                  <div class="profile">
+                    <img src="img/avatar/1.jpg" alt="" />
+                  </div>
+                </div>
+              </div>
+              <!---->
+              <div class="item">
+                <div class="user">
+                  <div class="profile">
+                    <img src="img/avatar/3.jpg" alt="" />
+                  </div>
+                </div>
+              </div>
+              <!---->
+              <div class="item">
+                <div class="user">
+                  <div class="profile">
+                    <img src="img/avatar/4.jpg" alt="" />
+                  </div>
+                </div>
+              </div>
+              <!---->
+
+              <div class="item">
+                <div class="user">
+                  <div class="profile">
+                    <img src="img/avatar/2.jpg" alt="" />
+                  </div>
+                </div>
+              </div>
+              <!---->
+
+              <div class="item">
+                <div class="user">
+                  <div class="profile">
+                    <img src="img/avatar/4.jpg" alt="" />
+                  </div>
+                </div>
+              </div>
+              <!---->
+
+              <div class="item">
+                <div class="user">
+                  <div class="profile">
+                    <img src="img/avatar/5.jpg" alt="" />
+                  </div>
+                </div>
+              </div>
+              <!---->
+            </div>
+          </div>
+          <!--post container-->
+          <div
+            th:each="post : ${posts}"
+            class="view view-post-container smaller-margin">
+            <div class="view-post">
+              <div class="upper">
+                <div class="d-flex">
+                  <div class="user">
+                    <div class="profile">
+                      <img th:src="${post.user.getAvatarName()}" alt="" />
+                    </div>
+                  </div>
+
+                  <div class="info">
+                    <h6 class="name" th:text="${post.user.name}"></h6>
+                    <span
+                      th:text="${ post.getElapsedTimeInMinutes() + ' minutes ago'}"
+                    ></span>
+                    <span><i class="fas fa-user-friends"></i></span>
+                  </div>
+                </div>
+
+                <div class="dots">
+                  <div class="dot"></div>
+                </div>
+              </div>
+
+              <div class="desc">
+                <p th:text="${post.text}">aaaaa</p>
+              </div>
+
+              <div class="post-img" th:if="${post.getBase64Image() != null}">
+                <img
+                  th:src="'data:image/jpeg;base64,' + ${post.getBase64Image()}"
+                  alt="Hình ảnh bài viết"
+                />
+                
+              </div>
+               <div class="post-img" th:if="${post.getPostVideo() != null}">
+                <video controls>
+                    <source th:src="'data:video/mp4;base64,' + ${post.getBase64Video()}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                </div>
+              <div class="emojis-comment">
+                <div class="lilowow-cs">
+                  <div class="llw-count">
+                    <div class="icon-show top">
+                      <img src="img/icons/wow.png" />
+                    </div>
+                    <div class="icon-show mid like-icon-bg">
+                      <i class="fas fa-thumbs-up"></i>
+                    </div>
+                    <div class="icon-show low love-icon-bg">
+                      <i class="fas fa-heart"></i>
+                    </div>
+                    <div>
+                      <p class="l-count"><span>11</span></p>
+                    </div>
+                  </div>
+
+                  <div>
+                    <p>
+                      <a href="#">1 Comments</a>
+
+                      <a href="#">1 Share</a>
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="actions-container">
+                <div class="action">
+                  <div class="icon">
+                    <img src="img/icons/thumbs-up.svg" alt="" />
+                  </div>
+                  <span> like </span>
+                </div>
+
+                <div class="action">
+                  <div class="icon">
+                    <img src="img/icons/comment.svg" alt="" />
+                  </div>
+                  <span> comment </span>
+                </div>
+
+                <div class="action">
+                  <div class="icon">
+                    <img src="img/icons/share.svg" alt="" />
+                  </div>
+                  <span> share </span>
+                </div>
+              </div>
+              <div class="comment-box" th:id="${post.id} + 'postcomments'">
+                <div th:each="comment : ${comments}" class="comment-container">
+                  <div class="comment">
+                    <img th:src="${comment.user.getAvatarName()}" alt="" class="comment-img" />
+                    <div class="comment-text">
+                      <div class="comment-header">
+                        <p><strong th:text="${comment.user.name}"></strong></p>
+                      </div>
+                       <p th:text="${comment.text}"></p>
+                    </div>
+                    <div class="three-dot">
+                      <img
+                        src="svg/three_dot_gray.svg"
+                        class="three-dot-img"
+                        alt=""
+                      />
+                    </div>
+                  </div>
+                  <div class="comment-lks">
+                    <p>
+                      <span>Like</span><span class="dot"> . </span>
+                      <span>Reply</span><span class="dot"> . </span>
+                      <span>Share</span><span class="dot"> . </span>
+                      <span th:text="${ comment.getElapsedTimeInMinutes() + ' minutes ago'}">2 m</span>
+                    </p>
+                  </div>
+                </div>
+                  <form
+                    th:object="${comment}"
+                    th:id ="${post.id}"
+                    th:action="@{/post/save/{postid}(postid=${post.id})}"
+                    method="post"
+                    
+                    >
+                  <div class="write-comment">
+                <div class="user">
+                  <div class="profile">
+                    <img th:src="${user.getAvatarName()}" alt="" />
+                  </div>
+                </div>
+                
+                <div class="input">
+                    
+                        <input
+                            type="text"
+                            placeholder="Write a comment"
+                            name="postid"
+                            id="postid"
+                            th:data-cbid="${post.id} + 'postcomments'"
+                            th:field="*{text}"
+                            />
+                  
+                  <div class="media">
+                    <div class="icon">
+                      <img src="img/icons/camera.svg" alt="" />
+                    </div>
+
+                    <div class="icon">
+                      <img src="img/icons/image.svg" alt="" />
+                    </div>
+
+                    <div class="icon">
+                      <img src="img/icons/smile-2.svg" alt="" />
+                    </div>
+                      <div class="icon">
+                          <button type="submit" style="
+                                  width: 20%;
+                                  height: 20%;
+                                  font-size: 12px;
+                                  ">
+                              send
+                          </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+
+              </div>
+
+            </div>
+          </div>
+          <!--people you may know-->
+          <div class="view friends smaller-margin">
+            <div class="upper">
+              <h6>people you may know</h6>
+              <div class="dots">
+                <div class="dot"></div>
+              </div>
+            </div>
+
+            <div class="owl-carousel owl-theme people">
+              <div class="item">
+                <div class="person-img">
+                  <div class="icon">&times;</div>
+                  <img src="img/avatar/1.jpg" alt="" />
+                </div>
+
+                <div class="info">
+                  <h4>rosie pie</h4>
+                  <span>4 mutual friend</span>
+                  <button>add friend</button>
+                </div>
+              </div>
+              <!---->
+
+              <div class="item">
+                <div class="person-img">
+                  <div class="icon">&times;</div>
+                  <img src="img/avatar/4.jpg" alt="" />
+                </div>
+
+                <div class="info">
+                  <h4>sarah jones</h4>
+                  <span>4 mutual friend</span>
+                  <button>add friend</button>
+                </div>
+              </div>
+              <!---->
+
+              <div class="item">
+                <div class="person-img">
+                  <div class="icon">&times;</div>
+                  <img src="img/avatar/3.jpg" alt="" />
+                </div>
+
+                <div class="info">
+                  <h4>chris doe</h4>
+                  <span>4 mutual friend</span>
+                  <button>add friend</button>
+                </div>
+              </div>
+              <!---->
+
+              <div class="item">
+                <div class="person-img">
+                  <div class="icon">&times;</div>
+                  <img src="img/avatar/2.jpg" alt="" />
+                </div>
+
+                <div class="info">
+                  <h4>katie adam</h4>
+                  <span>4 mutual friend</span>
+                  <button>add friend</button>
+                </div>
+              </div>
+              <!---->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--shortcuts 2 -events and chat- -->
+      <div class="shortcuts shortcuts-2">
+        <div class="second-col first-col">
+          <div class="menu-item">
+            <div class="upper">
+              <h6>Your pages</h6>
+            </div>
+          </div>
+
+          <div class="menu-item">
+            <div class="item-row">
+              <div class="icon">
+                <img src="img/stories/st-2.jpeg" alt="" />
+              </div>
+              <h4>Script house</h4>
+            </div>
+          </div>
+
+          <div class="menu-item">
+            <div class="item-row">
+              <div class="icon">
+                <img src="img/stories/st-1.jpeg" alt="" />
+              </div>
+              <h4>omar ui design</h4>
+            </div>
+          </div>
+
+          <div class="menu-item">
+            <div class="item-row border">
+              <div class="icon more">
+                <img src="img/icons/arrow-down.svg" alt="" />
+              </div>
+              <h4>see more</h4>
+            </div>
+          </div>
+        </div>
+        <div class="second-col">
+          <h6 class="title">birthdays</h6>
+          <div class="menu-item">
+            <div class="item-row">
+              <div class="icon not-rounded">
+                <img src="img/icons/gift.svg" alt="" />
+              </div>
+              <h4>it's kienai's birthday</h4>
+            </div>
+          </div>
+          <div class="online">
+            <h6 class="title">contact</h6>
+
+            <div class="user">
+              <div class="profile">
+                <img src="img/avatar/1.jpg" alt="" />
+              </div>
+              <h4>diana berry</h4>
+            </div>
+
+            <div class="user">
+              <div class="profile">
+                <img src="img/avatar/4.jpg" alt="" />
+              </div>
+              <h4>rosie pie</h4>
+            </div>
+
+            <div class="user">
+              <div class="profile">
+                <img src="img/avatar/2.jpg" alt="" />
+              </div>
+              <h4>samantha jones</h4>
+            </div>
+
+            <div class="user">
+              <div class="profile">
+                <img src="img/avatar/3.jpg" alt="" />
+              </div>
+              <h4>john doe</h4>
+            </div>
+
+            <div class="user">
+              <div class="profile">
+                <img src="img/avatar/4.jpg" alt="" />
+              </div>
+              <h4>stacy jr.</h4>
+            </div>
+
+            <div class="user">
+              <div class="profile">
+                <img src="img/avatar/5.jpg" alt="" />
+              </div>
+              <h4>christin sam</h4>
+            </div>
+
+            <div class="user">
+              <div class="profile">
+                <img src="img/avatar/6.jpg" alt="" />
+              </div>
+              <h4>kate simon</h4>
+            </div>
+
+            <div class="user">
+              <div class="profile">
+                <img src="img/avatar/1.jpg" alt="" />
+              </div>
+              <h4>diana berry</h4>
+            </div>
+
+            <div class="user">
+              <div class="profile">
+                <img src="img/avatar/2.jpg" alt="" />
+              </div>
+              <h4>sarah cerny</h4>
+            </div>
+
+            <div class="user">
+              <div class="profile">
+                <img src="img/avatar/3.jpg" alt="" />
+              </div>
+              <h4>josh doe</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="overlay1" id="overlay">
+      <div class="container">
+        <div class="form-container">
+          <div class="cover" id="wrapper">
+            <section class="post">
+              <span class="close" id="closeButton">&times;</span>
+              <header>Create Post</header>
+              <form
+                th:object="${post}"
+                th:action="@{/home/save/{userid}?from=/home(userid=${user.id})}"
+                method="post"
+                enctype="multipart/form-data"
+              >
+                <div class="content">
+                  <img th:src="${user.getAvatarName()}" alt="logo" />
+                  <div class="details">
+                    <p th:text="${user.name}"></p>
+                    <div class="privacy">
+                      <i class="fas fa-user-friends"></i>
+                      <span>Friends</span>
+                      <i class="fas fa-caret-down"></i>
+                    </div>
+                  </div>
+                </div>
+
+                <textarea
+                  th:placeholder="'What\'s on your mind, ' + ${user.name} + '?'"
+                  spellcheck="false"
+                  th:field="*{text}"
+                ></textarea>
+                <div class="theme-emoji">
+                  <img src="img/icons2/theme.svg" alt="theme" />
+                  <img src="img/icons2/smile.svg" alt="smile" />
+                </div>
+                  <div id="fileInputContainer" style="display: none">
+                      <span id="closeimage" onclick="closeFileInputContainer()">X</span>
+                      <label for="image">
+                          <img th:src="@{/img/icons2/gallery.svg}" alt="gallery" />
+                          <br />
+                          <span>Choose a photo </span>
+                      </label>
+                      
+                      <input type="file" id="image" name="image" accept="image/*" />
+                  </div>
+                  <div id="fileVideo" style="display:none;">
+                          <span id="closevideo" onclick="closeVideo()">X</span>
+                          <label for="video">
+                              <img th:src="@{/img/icons/video-live.svg}" alt="gallery" />
+                              <br>
+                              <span>Choose a video</span>
+                          </label>
+                          <input type="file" id="video" name="video" accept="video/*" />
+
+                      </div>
+                <div class="options">
+                  <p>Add to Your Post</p>
+                  <ul class="list">
+                    <li>
+                      <img
+                        th:src="@{/img/icons2/gallery.svg}"
+                        alt="gallery"
+                        onclick="toggleFileInput()"
+                      />
+                    </li>
+                    <li><img th:src="@{/img/icons/video-live.svg}" alt="gallery" onclick="toggleVideo()" /></li>
+                    <li><img src="img/icons2/emoji.svg" alt="gallery" /></li>
+                    <li><img src="img/icons2/mic.svg" alt="gallery" /></li>
+                    <li><img src="img/icons2/more.svg" alt="gallery" /></li>
+                  </ul>
+                </div>
+                <button type="submit">Post</button>
+              </form>
+            </section>
+            <section class="audience">
+              <header>
+                <div class="arrow-back"><i class="fas fa-arrow-left"></i></div>
+                <p>Select Audience</p>
+              </header>
+              <div class="content">
+                <p>Who can see your post?</p>
+                <span
+                  >Your post will show up in News Feed, on your profile and in
+                  search results.</span
+                >
+              </div>
+              <ul class="list">
+                <li>
+                  <div class="column">
+                    <div class="icon"><i class="fas fa-globe-asia"></i></div>
+                    <div class="details">
+                      <p>Public</p>
+                      <span>Anyone on or off SilkRoad</span>
+                    </div>
+                  </div>
+                  <div class="radio"></div>
+                </li>
+                <li class="show">
+                  <div class="column">
+                    <div class="icon"><i class="fas fa-user-friends"></i></div>
+                    <div class="details">
+                      <p>Friends</p>
+                      <span>Your friends on SilkRoad</span>
+                    </div>
+                  </div>
+                  <div class="radio"></div>
+                </li>
+                <li>
+                  <div class="column">
+                    <div class="icon"><i class="fas fa-user"></i></div>
+                    <div class="details">
+                      <p>Specific</p>
+                      <span>Only show to some friends</span>
+                    </div>
+                  </div>
+                  <div class="radio"></div>
+                </li>
+                <li>
+                  <div class="column">
+                    <div class="icon"><i class="fas fa-lock"></i></div>
+                    <div class="details">
+                      <p>Only me</p>
+                      <span>Only you can see your post</span>
+                    </div>
+                  </div>
+                  <div class="radio"></div>
+                </li>
+                <li>
+                  <div class="column">
+                    <div class="icon"><i class="fas fa-cog"></i></div>
+                    <div class="details">
+                      <p>Custom</p>
+                      <span>Include and exclude friends</span>
+                    </div>
+                  </div>
+                  <div class="radio"></div>
+                </li>
+              </ul>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const userLoggedInId = "[[${user.id}]]";
+      const userLoggedInName = "[[${user.name}]]";
+      const userLoggedInAvatar = "[[${user.avatarName}]]";
+    </script>
+
+    <script>
+    function toggleFileInput() {
+        var fileInputContainer = document.getElementById("fileInputContainer");
+        var videoContainer = document.getElementById("fileVideo");
+
+        // Close video container if it's open
+        if (videoContainer.style.display === "block") {
+            videoContainer.style.display = "none";
+        }
+
+        // Toggle file input container
+        fileInputContainer.style.display = fileInputContainer.style.display === "none" ? "block" : "none";
+    }
+</script>
+    <script>
+    function toggleVideo() {
+        
+        var fileInputContainer = document.getElementById("fileInputContainer");
+        var videoContainer = document.getElementById("fileVideo");
+
+        // Close file input container if it's open
+        if (fileInputContainer.style.display === "block") {
+            fileInputContainer.style.display = "none";
+        }
+        // Toggle video container
+        videoContainer.style.display = videoContainer.style.display === "none" ? "block" : "none";
+    }
+</script>
+    <script>
+    function closeFileInputContainer() {
+        document.getElementById('fileInputContainer').style.display = 'none';
+    }
+</script>
+<script>
+    function closeVideo() {
+        document.getElementById('fileVideo').style.display = 'none';
+    }
+</script>
+    <script>
+      const container = document.querySelector(".container"),
+        privacy = container.querySelector(".post .privacy"),
+        arrowBack = container.querySelector(".audience .arrow-back");
+      // wrapper = document.querySelector(".wrapper"),
+
+      privacy.addEventListener("click", () => {
+        container.classList.add("show");
+        // wrapper.style.justifyContent = "none";
+      });
+
+      arrowBack.addEventListener("click", () => {
+        container.classList.remove("show");
+      });
+      const overlay = document.getElementById("overlay");
+      const btnClick = document.getElementById("addPost");
+      btnClick.addEventListener("click", () => {
+        overlay.style.display = "flex";
+      });
+      document
+        .getElementById("overlay")
+        .addEventListener("click", function (e) {
+          if (e.target === document.getElementById("overlay")) {
+            overlay.style.display = "none";
+          }
+        });
+      document
+        .getElementById("closeButton")
+        .addEventListener("click", function () {
+          overlay.style.display = "none";
+        });
+    </script>
+    <!-- <script src="js/post.js"></script> -->
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/index.js"></script>
+  </body>
+</html>

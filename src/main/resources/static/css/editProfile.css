@@ -1,0 +1,186 @@
+@import "./normalize.css";
+
+body {
+  margin: 0;
+}
+
+.editProfile-container {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.editProfile-header {
+  height: 60px;
+  background-color: #efe2e2;
+}
+
+/* section cover image */
+/* .cover-image-section {
+  width: 100%;
+  height: 250px;
+  background-image: linear-gradient(#6fa702, #fff);
+}
+
+.cover-background-5 {
+  background-image: linear-gradient(#6fa702, #fff);
+}
+
+.cover-hader-site {
+  position: relative;
+  width: 70%;
+  height: 100%;
+  margin: auto;
+}
+.cover-hader-site img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  cursor: pointer;
+  border-radius: 0px 0px 10px 10px;
+}
+
+.cover-image-div {
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+  width: 100%;
+  height: 50px;
+}
+.cover-image-edite-btn {
+  text-align: right;
+}
+.cover-image-edite-btn button {
+  padding: 7px 10px;
+  border-radius: 5px;
+  margin-top: 10px;
+  margin-right: 20px;
+  font-size: 13px;
+  background-color: #fff;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  color: #333;
+}
+.cover-image-edite-btn button:hover {
+  background-color: #f2f2f2;
+}
+.cover-image-edite-btn button i {
+  margin-right: 5px;
+}
+
+@media screen and (max-width: 575px) {
+  .cover-hader-site {
+    width: 100%;
+  }
+  .profile-section-in,
+  .navbar-site,
+  .post-section-in {
+    width: 98%;
+  }
+  .cover-hader-site img {
+    border-radius: 0px 0px;
+    cursor: pointer;
+  }
+
+  .cover-image-div {
+    top: 0px;
+  }
+  .cover-image-edite-btn button {
+    margin-top: 18px;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .cover-hader-site,
+  .profile-section-in,
+  .navbar-site,
+  .post-section-in {
+    width: 80%;
+  }
+  .profile-image-div {
+    width: 120px;
+    height: 120px;
+    transform: translateY(-20px);
+  }
+  .profile-name-info h1 {
+    font-size: 23px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .cover-hader-site,
+  .profile-section-in,
+  .navbar-site {
+    width: 90%;
+  }
+} */
+/* section editUser */
+.editProfile-section-editUser {
+  height: calc(100vh - 60px);
+}
+
+.editProfile-section-editUser-container {
+  max-width: 990px;
+  /* max-height: 520px; */
+}
+
+.editProfile-section-editUser-heading {
+  margin-left: 12px;
+  font-size: 16px;
+}
+
+.editProfile-section-editUser-formContainer {
+  margin-top: 16px;
+}
+
+.editProfile-section-editUser-user-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+/* form */
+.editProfile-section-editUser-form-valueContainer {
+  box-sizing: border-box;
+  padding-left: 20px;
+  padding-bottom: 30px;
+}
+
+.editProfile-section-editUser-form-labelContainer {
+  text-align: right;
+  color: rgba(85, 85, 85, 0.8);
+  overflow: hidden;
+  padding-bottom: 30px;
+  white-space: nowrap;
+  min-width: 20%;
+}
+
+/* image */
+.editProfile-btn-chooseFile {
+  outline: 0;
+  background: #fff;
+  color: #555;
+  border: 1px solid rgba(0, 0, 0, 0.09);
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.03);
+  position: relative;
+  overflow: visible;
+  height: 40px;
+  padding: 0 20px;
+  min-width: 70px;
+  max-width: 220px;
+  display: inline-flex;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 1;
+  flex-direction: column;
+  font-size: 14px;
+  box-sizing: border-box;
+  border-radius: 2px;
+  align-items: center;
+  justify-content: center;
+  text-transform: capitalize;
+}
+
+.editProfile-btn-chooseFile:hover {
+  background: rgba(0, 0, 0, 0.02);
+}
+
