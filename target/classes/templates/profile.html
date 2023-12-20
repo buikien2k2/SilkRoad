@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html
+    lang="en"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    xmlns:sec="http://www.thymeleaf.org"
+    >
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <title>SilkRoad</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+            crossorigin="anonymous"
+            />
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+            crossorigin="anonymous"
+        ></script>
+        <link rel="icon" href="/img/avatar/SilkRoad.jpg" type="image/x-icon" />
+        <link rel="stylesheet" type="text/css" href="/css/post.css" />
+        <link rel="stylesheet" type="text/css" href="/css/style.css" />
+        <link rel="stylesheet" type="text/css" href="/css/all.min.css" />
+        <link rel="stylesheet" type="text/css" href="/css/profile2.css" />
+        <link rel="stylesheet" type="text/css" href="/css/editProfile.css" />
+    </head>
+
+    <body>
+        <style>
+            #fileInputContainer {
+                display: none;
+                position: fixed;
+                top: 55%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background-color: #3A3B3C;
+                border: 1px solid #585656;
+                border-radius: 5px;
+                padding: 20px 5px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                width: 451px;
+                height: 100px;
+                z-index: 999;
+
+            }
+            #fileVideo {
+                display: none;
+                position: fixed;
+                top: 55%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background-color: #3A3B3C;
+                border: 1px solid #585656;
+                border-radius: 5px;
+                padding: 20px 5px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                width: 451px;
+                height: 100px;
+                z-index: 999;
+
+            }
+            #fileVideo input[type="file"] {
+                display: none;
+            }
+            #fileInputContainer input[type="file"] {
+                display: none;
+            }
+
+            #fileInputContainer label {
+
+                color: #fff;
+                padding: 10px 15px;
+                border-radius: 5px;
+                cursor: pointer;
+                display: inline-block;
+                transition: background-color 0.3s;
+                background: #8a8888;
+                width: 98%;
+                height: 135%;
+                margin-top: -10px;
+                margin-left: 5px;
+                position: relative;
+                z-index: 1;
+
+            }
+            #fileVideo label {
+
+                color: #fff;
+                padding: 10px 15px;
+                border-radius: 5px;
+                cursor: pointer;
+                display: inline-block;
+                transition: background-color 0.3s;
+                background: #8a8888;
+                width: 98%;
+                height: 135%;
+                margin-top: -10px;
+                margin-left: 5px;
+                position: relative;
+                z-index: 1;
+
+            }
+
+            #fileInputContainer label:hover {
+                background-color: #365899;
+            }
+            #fileVideo label:hover {
+                background-color: #365899;
+            }
+
+            #fileInputContainer img {
+                margin-right: 10px;
+                width: 385px;
+                height: 20px;
+                color: #4c4c4d;
+            }
+            #fileVideo img {
+                margin-right: 10px;
+                width: 385px;
+                height: 20px;
+                color: #4c4c4d;
+            }
+
+            #fileInputContainer span {
+                font-weight: bold;
+                margin-left: 130px;
+                color: #E4E6EA;
+            }
+            #fileVideo span {
+                font-weight: bold;
+                margin-left: 130px;
+                color: #E4E6EA;
+            }
+            #closeimage{
+                float: right;
+                cursor: pointer;
+                font-weight: bold;
+                color: #ccc;
+                transition: color 0.3s;
+                margin-top: -18px;
+                border-radius: 50%;
+                background: #323436;
+                padding: 0px 5px;
+                font-size: 14px;
+                position: absolute;
+                top: 20px;
+                right: 2px;
+                z-index: 2;
+            }
+            #closevideo{
+                float: right;
+                cursor: pointer;
+                font-weight: bold;
+                color: #ccc;
+                transition: color 0.3s;
+                margin-top: -18px;
+                border-radius: 50%;
+                background: #323436;
+                padding: 0px 5px;
+                font-size: 14px;
+                position: absolute;
+                top: 20px;
+                right: 2px;
+                z-index: 2;
+            }
+
+            #closevideo:hover {
+                background: #8a8888
+            }
+            #closeimage:hover {
+                background: #8a8888
+            }
+            .post-img{
+                display: flex;
+                justify-content: center;
+            }
+        </style>
+        <div id="header"></div>
+        <div class="popop-background"></div>
+        <section id="cover-image-section" class="cover-image-section">
+            <header class="cover-hader-site">
+                <div class="img">
+                    <img
+                        id="coverImageElement"
+                        th:src="${user.coverImg ?: '/img/profileCover/no-cover.jpg'}"
+                        />
+                </div>
+
+                <div class="cover-image-div" th:if="${userLoggedIn.id == user.id}">
+                    <div class="cover-image-edite-btn">
+                        <input
+                            id="changeCoverImageInput"
+                            type="file"
+                            class="d-none"
+                            style="display: none"
+                            th:data-userid="${user.id}"
+                            />
+                        <button onclick="handleChangeCoverImageButtonClick()">
+                            <i class="fas fa-camera"></i>
+                            Edit Cover Photo
+                        </button>
+                    </div>
+                </div>
+            </header>
+        </section>
+
+        <section class="profile-section">
+            <div class="profile-section-in">
+                <div class="profile-image-site">
+                    <div class="profile-image-div">
+                        <a href="#" id="profile-link">
+                            <img
+                                id="Profile_Avatar"
+                                th:src="${user.avatarName ?: '/img/avatar/no-avatar.jpg'}"
+                                />
+                        </a>
+                        <span
+                            class="fas fa-camera"
+                            onclick="handleChangeAvatarImageButtonClick()"
+                            ></span>
+                        <input
+                            id="changeAvatarImageInput"
+                            type="file"
+                            class="d-none"
+                            onchange=""
+                            style="display: none"
+                            />
+                    </div>
+                </div>
+                <div class="profile-name-info">
+                    <h1>
+                        <span
+                            class="pro-txt"
+                            id="profile_name"
+                            th:text="${user.name}"
+                            ></span>
+                        <span id="nik-name"></span>
+                    </h1>
+                    <p>
+                        <span class="fir-count-txt">
+                            <span
+                                id="friend_count"
+                                th:if="${friends != null}"
+                                th:text="${friends.size()}"
+                                ></span>
+                            Friends
+                        </span>
+                    </p>
+                </div>
+                <div class="profile-button-site" th:if="${userLoggedIn.id == user.id}">
+                    <div class="btn-site-pro">
+                        <span>
+                            <i class="fas fa-plus-circle"></i>
+                            Add to Story
+                        </span>
+                        <span
+                            id="edit-profile-btn"
+                            type="button"
+                            class="edit-profile-btn"
+                            data-bs-toggle="modal"
+                            data-bs-target="#EditProfileModal"
+                            >
+                            Edit Profile
+                        </span>
+                    </div>
+                </div>
+                <div class="profile-button-site" th:if="${userLoggedIn.id != user.id}">
+                    <div class="btn-site-pro">
+                        <!-- ADD FRIEND -->
+                        <form
+                            method="GET"
+                            th:action="@{/friendship/request/{userid}(userid=${user.id})}"
+                            th:if="${friendship == null}"
+                            >
+                            <button
+                                type="submit"
+                                style="
+                                width: auto;
+                                height: auto;
+                                padding: 4px;
+                                color: white;
+                                background-color: #1877f2;
+                                "
+                                th:if="${friendship == null}"
+                                >
+                                <i class="fas fa-plus-circle"></i>
+                                Add Friend
+                            </button>
+                        </form>
+                        <!-- REMOVE FRIENDSHIP -->
+                        <form
+                            method="GET"
+                            th:action="@{/friendship/remove/{userid}(userid=${user.id})}"
+                            th:if="${friendship != null}"
+                            >
+                            <button
+                                type="submit"
+                                style="
+                                width: auto;
+                                height: auto;
+                                padding: 4px;
+                                color: white;
+                                background-color: #1877f2;
+                                "
+                                th:if="${friendship != null and friendship.getUser1().getId() == userLoggedIn.id and friendship.FriendshipStatus == 0}"
+                                >
+                                <i class="fas fa-trash"></i>
+                                Cancel Request
+                            </button>
+                            <button
+                                type="submit"
+                                style="
+                                width: auto;
+                                height: auto;
+                                padding: 4px;
+                                color: white;
+                                background-color: #1877f2;
+                                "
+                                th:if="${friendship != null and friendship.FriendshipStatus == 1}"
+                                >
+                                <i class="fas fa-trash"></i>
+                                Remove Friend
+                            </button>
+                        </form>
+                        <!-- ACCEPT REQUEST -->
+                        <form
+                            method="GET"
+                            th:action="@{/friendship/accept/{userid}(userid=${user.id})}"
+                            th:if="${friendship != null and friendship.getUser2().getId() == userLoggedIn.id and friendship.FriendshipStatus == 0}"
+                            >
+                            <button
+                                type="submit"
+                                style="
+                                width: auto;
+                                height: auto;
+                                padding: 4px;
+                                color: white;
+                                background-color: #1877f2;
+                                "
+                                >
+                                <i class="fas fa-plus-circle"></i>
+                                Accept Friend
+                            </button>
+                        </form>
+                        <form
+                            method="GET"
+                            th:action="@{/friendship/remove/{userid}(userid=${user.id})}"
+                            th:if="${friendship != null and friendship.getUser2().getId() == userLoggedIn.id and friendship.FriendshipStatus == 0}"
+                            >
+                            <button
+                                type="submit"
+                                style="
+                                width: auto;
+                                height: auto;
+                                padding: 4px;
+                                color: white;
+                                background-color: #1877f2;
+                                margin: 0 4px;
+                                "
+                                >
+                                <i class="fas fa-trash"></i>
+                                Cancel Request
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="full-navbar">
+            <nav class="navbar-site">
+                <ul compact="txt-color-c">
+                    <a href="#">
+                        <li id="post-nav" class="txt-cc activ-navbar">Posts</li>
+                    </a>
+                    <a href="#">
+                        <li id="about-nav" class="txt-cc">About</li>
+                    </a>
+                    <a href="#">
+                        <li id="friends-nav" class="txt-cc">Friends</li>
+                    </a>
+                    <a href="#">
+                        <li id="photo-nav" class="txt-cc">Photo</li>
+                    </a>
+                    <a href="#">
+                        <li id="video-nav" class="txt-cc">Video</li>
+                    </a>
+                    <a href="#">
+                        <li id="likes-nav" class="txt-cc">Likes</li>
+                    </a>
+                    <a href="#">
+                        <li id="more-nav" class="txt-cc">
+                            More <i class="fas fa-caret-down"></i>
+                        </li>
+                    </a>
+                </ul>
+
+                <!-- <div class="nav-btn">
+                  <i class="fas fa-ellipsis-h"></i>
+                </div> -->
+            </nav>
+        </section>
+
+        <section class="post-section" id="tab-1">
+            <div class="post-section-in">
+                <section class="info-section">
+                    <div class="about-info">
+                        <h4>Intro</h4>
+                        <div class="bio-btn-click">
+                            <input class="input-box" type="text" value="MD Mehedi Hasan" />
+                            <p class="length-count-txt">
+                                <span id="length-count">101</span> characters remaining
+                            </p>
+                            <div class="putlic-c-o-btn">
+                                <div>
+                                    <p><span class="fas fa-globe-europe"></span> Public</p>
+                                </div>
+                                <div class="button-site-js">
+                                    <button id="cencel-btn">Cencel</button>
+                                    <button id="save-btn">Save</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <ul>
+                            <li>
+                                <i class="fas fa-briefcase"></i> Works at
+                                <a
+                                    href="#"
+                                    th:if="${not #strings.isEmpty(userdetail.WorkAt)}"
+                                    th:text="${userdetail.WorkAt}"
+                                    ></a>
+                            </li>
+
+                            <li>
+                                <i class="fas fa-graduation-cap"></i> Went to
+                                <a
+                                    href="#"
+                                    th:if="${not #strings.isEmpty(userdetail.School)}"
+                                    th:text="${userdetail.School}"
+                                    ></a>
+                            </li>
+
+                            <li>
+                                <i class="fas fa-home"></i> Lives in
+                                <a
+                                    href="#"
+                                    th:if="${not #strings.isEmpty(userdetail.LiveAt)}"
+                                    th:text="${userdetail.LiveAt}"
+                                    ></a>
+                            </li>
+                            <li>
+                                <i class="fas fa-heart"></i>
+                                <span
+                                    th:text="${userdetail.relation == 0 ? 'Độc thân' : 'Yêu đương'}"
+                                    ></span>
+                            </li>
+                            <li>
+                                <i class="fas fa-globe"></i>
+                                <a
+                                    href="#"
+                                    th:if="${not #strings.isEmpty(user.Email)}"
+                                    th:text="${user.Email}"
+                                    ></a>
+                            </li>
+                        </ul>
+                        <button
+                            th:if="${userLoggedIn.id == user.id}"
+                            class="edit-bio btn"
+                            data-bs-toggle="modal"
+                            data-bs-target="#EditProfileDetailsModal"
+                            >
+                            Edit Details
+                        </button>
+                        <button
+                            th:if="${userLoggedIn.id == user.id}"
+                            id="edit-bio-btn"
+                            class="edit-bio btn"
+                            >
+                            Edit Bio
+                        </button>
+                        <button th:if="${userLoggedIn.id == user.id}" class="edit-bio btn">
+                            Edit Hobbies
+                        </button>
+                        <button th:if="${userLoggedIn.id == user.id}" class="edit-bio btn">
+                            Edit Featured
+                        </button>
+                    </div>
+
+                    <div class="box-design images-site">
+                        <span>Photos</span>
+
+                        <div class="see-all-images"><a href="#">See All Photos</a></div>
+
+                        <div class="at9-images">
+                            <div class="images-div">
+                                <img id="post-image-12" src="/img/stories/page-1.jpg" />
+                            </div>
+
+                            <div class="images-div">
+                                <img id="post-image-2" src="/img/stories/page-2.jpg" />
+                            </div>
+
+                            <div class="images-div">
+                                <img id="post-image-3" src="/img/stories/page-3.jpeg" />
+                            </div>
+
+                            <div class="images-div">
+                                <img id="post-image-4" src="/img/stories/st-1.jpeg" />
+                            </div>
+
+                            <div class="images-div">
+                                <img id="post-image-5" src="/img/stories/st-2.jpeg" />
+                            </div>
+
+                            <div class="images-div">
+                                <img id="post-image-6" src="/img/stories/st-3.jpeg" />
+                            </div>
+
+                            <div class="images-div">
+                                <img id="post-image-7" src="/img/stories/st-4.jpg" />
+                            </div>
+
+                            <div class="images-div">
+                                <img id="post-image-8" src="/img/stories/st-4.jpg" />
+                            </div>
+
+                            <div class="images-div">
+                                <img id="post-image-9" src="/img/stories/st-4.jpg" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="box-design friends-site">
+                        <span
+                            >Friends <br />
+                            <p>
+                                <span
+                                    th:if="${friends != null}"
+                                    th:text="${friends.size()}"
+                                    ></span>
+                                Friends
+                            </p>
+                        </span>
+
+                        <div class="see-all-images"><a href="#">See All Friends</a></div>
+
+                        <div class="at9-images">
+                            <div class="images-div" th:each="fr : ${friends}">
+                                <img
+                                    th:src="${fr.getAvatarName() ne '' ? fr.getAvatarName() : '/img/avatar/no-avatar.jpg'}"
+                                    />
+                                <p>
+                                    <a
+                                        th:href="@{/profile/{userId}(userId=${fr.id})}"
+                                        th:text="${fr.getName()}"
+                                        >Mehei Hasan
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="post-info">
+                    <div class="box-design">
+                        <div class="post-upload-T">
+                            <div class="profil-ing-div">
+                                <a href="#" id="profile-link">
+                                    <img
+                                        id="Profile_images"
+                                        th:src="${user.avatarName ?: '/img/avatar/no-avatar.jpg'}"
+                                        />
+                                </a>
+                            </div>
+                            <div class="text-post" id="addPost">
+                                <span>What's on your mind?</span>
+                            </div>
+                        </div>
+                        <div class="photo-upload">
+                            <div class="post-upl">
+                                <p><i class="fas fa-video"></i> Live Video</p>
+                            </div>
+                            <div class="post-upl">
+                                <p><i class="fas fa-images"></i> Photo/Video</p>
+                            </div>
+                            <div class="post-upl">
+                                <p><i class="fas fa-flag"></i> Life Event</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="box-design post-filter">
+                        <div class="filter-site">
+                            <span>Posts</span>
+                            <div class="fil-ter">
+                                <button><i class="fas fa-sliders-h"></i> Filters</button>
+
+                                <button><i class="fas fa-cog"></i> Manager Posts</button>
+                            </div>
+                        </div>
+
+                        <div class="list-type">
+                            <div class="fil-list activ-navbar">
+                                <i class="fas fa-bars"></i> List View
+                            </div>
+                            <div class="fil-list">
+                                <i class="fas fa-th-large"></i> Grid View
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ************ Post ************ -->
+
+                    <div class="box-design post-div" th:each="post : ${posts}">
+                        <div class="view-post">
+                            <div
+                                class="post-infarmation"
+                                style="
+                                display: flex;
+                                justify-content: space-between;
+                                align-items: center;
+                                "
+                                >
+                                <div style="display: flex">
+                                    <div>
+                                        <div class="profil-ing-div post-profile-img">
+                                            <a href="#" id="profile-link">
+                                                <img
+                                                    id="Profile_images"
+                                                    th:src="${post.user.avatarName}"
+                                                    />
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="post-three-dot">
+                                        <h2>
+                                            <a
+                                                href="#"
+                                                id="profile_name"
+                                                th:text="${post.user.getName()}"
+                                                >Bùi Kiên</a
+                                            >
+                                        </h2>
+                                        <div style="color: white; font-size: 10px">
+                                            <a
+                                                href="%"
+                                                th:text="${post.getElapsedTimeInMinutes() + 'm'}"
+                                                style="color: white"
+                                                >5d</a
+                                            >
+                                            <span>
+                                                <i id="public-btn-i" class="fas fa-user-friends"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <form
+                                    th:action="@{/post/delete/{postid}(postid=${post.id})}"
+                                    method="get"
+                                    >
+                                    <button
+                                        type="submit"
+                                        style="
+                                        width: 20px;
+                                        height: 20px;
+                                        color: rgb(22, 22, 22);
+                                        background-color: white;
+                                        border-radius: 100%;
+                                        padding: 2px;
+                                        font-size: 14px;
+                                        "
+                                        >
+                                        X
+                                    </button>
+                                </form>
+                            </div>
+
+                            <p class="post-hader-text" id="post_h_T" th:text="${post.text}">
+                                Hello World.
+                            </p>
+                            <img
+                                th:if="${post.getBase64Image() != null}"
+                                id="post-image-12"
+                                class="post-images"
+                                th:src="'data:image/jpeg;base64,' + ${post.getBase64Image()}"
+                                alt="Hinh anh bai viet"
+                                />
+                            <video id="vidio-tge" width="100%" th:if="${post.getPostVideo() != null}" controls>
+                                <source id="video-update" th:src="'data:video/mp4;base64,' + ${post.getBase64Video()}" type="video/mp4" />
+                                Your browser does not support the video tag.
+                            </video>
+                            <div class="post-info-input">
+                                <div class="lilowow-cs">
+                                    <div class="llw-count">
+                                        <div class="icon-show top" style="display: flex">
+                                            <img src="/img/icons/wow.png" />
+                                        </div>
+                                        <div class="icon-show mid like-icon-bg">
+                                            <i class="fas fa-thumbs-up"></i>
+                                        </div>
+                                        <div class="icon-show low love-icon-bg">
+                                            <i class="fas fa-heart"></i>
+                                        </div>
+                                        <div>
+                                            <p class="l-count" style="margin-bottom: 0">
+                                                <span>11</span>
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <p>
+                                            <a href="#">1 Comments</a>
+
+                                            <a href="#">1 Share</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="actavite">
+                                <div class="lcs-btn lcs-btn_i">
+                                    <p>
+                                        <i id="post-icon-btn_i" class="far fa-thumbs-up"></i>
+                                        <span id="post-icon-text_i">Like</span>
+                                    </p>
+                                </div>
+                                <div class="lcs-btn">
+                                    <p><i class="far fa-comment-alt"></i> Comment</p>
+                                </div>
+                                <div class="lcs-btn">
+                                    <p><i class="fas fa-share"></i> Share</p>
+                                </div>
+                            </div>
+
+                            <div
+                                class="comment-box"
+                                style="border-top: 1px solid #a8a6a633"
+                                th:id="${post.id} + 'postcomments'"
+                                ></div>
+
+                            <div class="comment-site">
+                                <div class="profil-ing-div">
+                                    <a href="#" id="profile-link">
+                                        <img id="Profile_images" th:src="${user.avatarName}" />
+                                    </a>
+                                </div>
+                                <div class="comment-input">
+                                    <input
+                                        type="text"
+                                        placeholder="Write a comment…"
+                                        th:data-cbid="${post.id} + 'postcomments'"
+                                        />
+                                    <div class="comment-icon-div">
+                                        <div>
+                                            <i class="far fa-grin-alt"></i>
+                                        </div>
+                                        <div>
+                                            <i class="fas fa-camera"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </section>
+
+        <section class="friends-list" id="tab-3">
+            <div class="friends-box">
+                <div class="friends-header">
+                    <div class="friend-title">
+                        <a href="#">
+                            <h4>Bạn bè</h4>
+                        </a>
+                    </div>
+                </div>
+                <div class="friends-nav">
+                    <ul class="list-nav">
+                        <li class="activ friend-nav-button" id="friend-nav-all-friends">
+                            All friends
+                        </li>
+                        <li
+                            class="friend-nav-button"
+                            id="friend-nav-waiting-response"
+                            th:if="${userLoggedIn.getId() == user.getId()}"
+                            >
+                            Waiting Response
+                        </li>
+                        <li
+                            class="friend-nav-button"
+                            id="friend-nav-waiting-response-self"
+                            th:if="${userLoggedIn.getId() == user.getId()}"
+                            >
+                            Waiting for your response
+                        </li>
+                    </ul>
+                </div>
+                <div class="show-list friend-nav-show-list" id="show-all-fr">
+                    <div class="friend-show" th:each="fr : ${friends}">
+                        <div class="friend-show-info">
+                            <img
+                                th:src="${fr.getAvatarName() ne '' ? fr.getAvatarName() : '/img/avatar/no-avatar.jpg'}"
+                                alt=""
+                                />
+                            <a th:href="@{/profile/{userId}(userId=${fr.id})}">
+                                <span class="friend-name" th:text="${fr.getName()}"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="show-list friend-nav-show-list"
+                    id="show-waiting-response-friend"
+                    style="display: none"
+                    th:if="${userLoggedIn.getId() == user.getId()}"
+                    >
+                    <div class="friend-show" th:each="fr : ${friendsWaiting}">
+                        <div class="friend-show-info">
+                            <img
+                                th:src="${fr.getAvatarName() ne '' ? fr.getAvatarName() : '/img/avatar/no-avatar.jpg'}"
+                                alt=""
+                                />
+                            <a th:href="@{/profile/{userId}(userId=${fr.id})}">
+                                <span class="friend-name" th:text="${fr.getName()}"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- self -->
+                <div
+                    class="show-list friend-nav-show-list"
+                    id="show-waiting-response-self"
+                    style="display: none"
+                    th:if="${userLoggedIn.getId() == user.getId()}"
+                    >
+                    <div class="friend-show" th:each="fr : ${friendsWaitingSelf}">
+                        <div class="friend-show-info">
+                            <img
+                                th:src="${fr.getAvatarName() ne '' ? fr.getAvatarName() : '/img/avatar/no-avatar.jpg'}"
+                                alt=""
+                                />
+                            <a th:href="@{/profile/{userId}(userId=${fr.id})}">
+                                <span class="friend-name" th:text="${fr.getName()}"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="make-post" id="make-post"></div>
+
+        <div
+            class="modal fade"
+            id="EditProfileModal"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="EditProfileModalLabel"
+            aria-hidden="true"
+            >
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Chỉnh sửa thông tin</h5>
+                        <button
+                            type="button"
+                            class="close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                            >
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form
+                            method="post"
+                            class="pe-2"
+                            th:action="@{/profile/{userid}/edit(userid=${user.id})}"
+                            th:object="${user}"
+                            >
+                            <table class="">
+                                <tr>
+                                    <td class="editProfile-section-editUser-form-labelContainer">
+                                        <label>Tên</label>
+                                    </td>
+                                    <td class="editProfile-section-editUser-form-valueContainer">
+                                        <div class="">
+                                            <input
+                                                name="name"
+                                                type="text"
+                                                class="form-control"
+                                                th:field="*{name}"
+                                                th:value="${user.name}"
+                                                />
+                                            <span
+                                                th:if="${#fields.hasErrors('name')}"
+                                                th:errors="*{name}"
+                                                ></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="editProfile-section-editUser-form-labelContainer">
+                                        <label>Email</label>
+                                    </td>
+                                    <td class="editProfile-section-editUser-form-valueContainer">
+                                        <div class="">
+                                            <input
+                                                type="email"
+                                                class="form-control"
+                                                th:value="${user.email}"
+                                                disabled
+                                                />
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="editProfile-section-editUser-form-labelContainer">
+                                        <label>Số điện thoại</label>
+                                    </td>
+                                    <td class="editProfile-section-editUser-form-valueContainer">
+                                        <div class="">
+                                            <input
+                                                id="editProfilePhone"
+                                                name="Phone"
+                                                class="form-control"
+                                                type="number"
+                                                th:field="*{phone}"
+                                                th:value="${user.phone}"
+                                                />
+                                            <span
+                                                th:if="${#fields.hasErrors('phone')}"
+                                                th:errors="*{phone}"
+                                                ></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="editProfile-section-editUser-form-labelContainer">
+                                        <label>Giới tính</label>
+                                    </td>
+                                    <td class="editProfile-section-editUser-form-valueContainer">
+                                        <div class="d-flex flex-row">
+                                            <div class="form-check">
+                                                <input
+                                                    class="form-check-input ms-4"
+                                                    type="radio"
+                                                    name="gender"
+                                                    id="genderRadioMale"
+                                                    th:field="*{gender}"
+                                                    th:checked="${user.getGender() == 0}"
+                                                    value="0"
+                                                    />
+                                                <label class="form-check-label" for="genderRadioMale">
+                                                    Nam
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input
+                                                    class="form-check-input ms-4"
+                                                    type="radio"
+                                                    name="gender"
+                                                    id="genderRadioFemale"
+                                                    th:field="*{gender}"
+                                                    th:checked="${user.getGender() == 1}"
+                                                    value="1"
+                                                    />
+                                                <label class="form-check-label" for="genderRadioFemale">
+                                                    Nữ
+                                                </label>
+                                            </div>
+                                            <span
+                                                th:if="${#fields.hasErrors('gender')}"
+                                                th:errors="*{gender}"
+                                                ></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="editProfile-section-editUser-form-labelContainer">
+                                        <label>Ngày sinh</label>
+                                    </td>
+                                    <td class="editProfile-section-editUser-form-valueContainer">
+                                        <input
+                                            id="editProfileDateOfBirth"
+                                            class="form-control"
+                                            type="date"
+                                            name="birth"
+                                            th:field="*{birth}"
+                                            th:value="${user.birth}"
+                                            />
+                                    </td>
+                                <span
+                                    th:if="${#fields.hasErrors('birth')}"
+                                    th:errors="*{birth}"
+                                    ></span>
+                                </tr>
+                                <tr>
+                                    <td class="editProfile-section-editUser-form-labelContainer">
+                                        <label></label>
+                                    </td>
+                                    <td class="editProfile-section-editUser-form-valueContainer">
+                                        <button type="submit" class="btn btn-primary">Lưu</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <!-- <button
+                          type="button"
+                          class="btn btn-secondary"
+                          data-bs-dismiss="modal"
+                        >
+                          Close
+                        </button> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div
+            class="modal fade"
+            id="EditProfileDetailsModal"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="EditProfileDetailsModal"
+            aria-hidden="true"
+            >
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Chỉnh sửa thông tin chi tiết</h5>
+                        <button
+                            type="button"
+                            class="close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                            >
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form
+                            method="post"
+                            class="pe-2"
+                            th:action="@{/profile/{userid}/editDetail(userid=${user.id})}"
+                            th:object="${userdetail}"
+                            >
+                            <table class="">
+                                <tr>
+                                    <td class="editProfile-section-editUser-form-labelContainer">
+                                        <label>Đang sinh sống tại</label>
+                                    </td>
+                                    <td class="editProfile-section-editUser-form-valueContainer">
+                                        <div class="">
+                                            <input
+                                                name="LiveAt"
+                                                type="text"
+                                                class="form-control"
+                                                th:field="*{LiveAt}"
+                                                th:value="${userdetail.LiveAt}"
+                                                />
+                                            <span
+                                                th:if="${#fields.hasErrors('LiveAt')}"
+                                                th:errors="*{LiveAt}"
+                                                ></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!-- <tr>
+                                  <td class="editProfile-section-editUser-form-labelContainer">
+                                    <label>Đến từ</label>
+                                  </td>
+                                  <td class="editProfile-section-editUser-form-valueContainer">
+                                    <div>
+                                      <div class="">
+                                        <input
+                                          name="LiveAt"
+                                          type="text"
+                                          placeholder=""
+                                          class="form-control"
+                                          th:field="*{LiveAt}"
+                                          th:value="${userdetail.LiveAt}"
+                                        />
+                                        <span
+                                          th:if="${#fields.hasErrors('LiveAt')}"
+                                          th:errors="*{LiveAt}"
+                                        ></span>
+                                      </div>
+                                    </div>
+                                  </td>
+                                </tr> -->
+                                <tr>
+                                    <td class="editProfile-section-editUser-form-labelContainer">
+                                        <label>Học tại trường</label>
+                                    </td>
+                                    <td class="editProfile-section-editUser-form-valueContainer">
+                                        <div class="">
+                                            <input
+                                                name="School"
+                                                type="text"
+                                                class="form-control"
+                                                th:field="*{School}"
+                                                th:value="${userdetail.School}"
+                                                />
+                                            <span
+                                                th:if="${#fields.hasErrors('School')}"
+                                                th:errors="*{School}"
+                                                ></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="editProfile-section-editUser-form-labelContainer">
+                                        <label>Làm việc tại</label>
+                                    </td>
+                                    <td class="editProfile-section-editUser-form-valueContainer">
+                                        <div class="">
+                                            <input
+                                                id="editProfilePhone"
+                                                name="WorkAt"
+                                                class="form-control"
+                                                type="text"
+                                                th:field="*{WorkAt}"
+                                                th:value="${userdetail.WorkAt}"
+                                                />
+                                            <span
+                                                th:if="${#fields.hasErrors('WorkAt')}"
+                                                th:errors="*{WorkAt}"
+                                                ></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="editProfile-section-editUser-form-labelContainer">
+                                        <label>Mối quan hệ</label>
+                                    </td>
+                                    <td class="editProfile-section-editUser-form-valueContainer">
+                                        <div class="d-flex flex-row">
+                                            <div class="form-check">
+                                                <input
+                                                    class="form-check-input ms-4"
+                                                    type="radio"
+                                                    name="Relation"
+                                                    id="RadioSingle"
+                                                    th:checked="${userdetail.Relation == 0}"
+                                                    value="0"
+                                                    />
+                                                <label class="form-check-label" for="RadioSingle">
+                                                    Độc thân
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input
+                                                    class="form-check-input ms-4"
+                                                    type="radio"
+                                                    name="Relation"
+                                                    id="RadioNotSingle"
+                                                    th:checked="${userdetail.Relation == 1}"
+                                                    value="1"
+                                                    />
+                                                <label class="form-check-label" for="RadioNotSingle">
+                                                    Yêu đương
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                            <hr />
+                            <button type="submit" class="btn btn-primary">Lưu</button>
+                        </form>
+                    </div>
+                    <!-- <div class="modal-footer"></div> -->
+                </div>
+            </div>
+        </div>
+
+        <input type="hidden" id="hiddenInputUserId" th:data-userid="${user.id}" />
+        <input
+            type="hidden"
+            id="hiddenInputUserLoggedInId"
+            th:data-userloggedinid="${userLoggedIn.id}"
+            />
+        <input
+            type="hidden"
+            id="hiddenInputUserLoggedIn"
+            th:value="${userLoggedIn}"
+            />
+        <script>
+            const userLoggedInId = "[[${userLoggedIn.id}]]";
+            const userLoggedInName = "[[${userLoggedIn.name}]]";
+            const userLoggedInAvatar = "[[${userLoggedIn.avatarName}]]";
+            const postSize = "[[${posts.size()}]]";
+            
+            
+        </script>
+        <script src="/js/profile.js"></script>
+        <script src="/js/render.js"></script>
+        <script>
+            const editProfileDateOfBirth = document.getElementById(
+                    "editProfileDateOfBirth"
+                    );
+
+            editProfileDateOfBirth.addEventListener("change", (e) => {
+                let date = e.target.value;
+                editProfileDateOfBirth.innerText = date;
+            });
+        </script>
+
+        <!-- comment -->
+        <script>
+            comment_inputs = document.querySelectorAll(".comment-input input");
+
+            function makeComment(text, cbid) {
+                document.getElementById(`${cbid}`).innerHTML += `
+      <div class="" style="padding-top: 15px">
+                    <div class="" style="display: flex">
+                      <img
+                        src="${userLoggedInAvatar}"
+                        alt=""
+                        style="
+                          width: 34px;
+                          height: 34px;
+                          border: none;
+                          border-radius: 50%;
+                          margin-left: 7px;
+                          margin-top: 5px;
+                          margin-right: 6px;
+                        "
+                      />
+                      <div
+                        style="
+                          background-color: var(--lighter);
+                          border: none;
+                          border-radius: 20px;
+                          padding: 13px;
+                          max-width: 500px;
+                          color: #fff;
+                        "
+                      >
+                        <div class="comment-header">
+                          <p style="font-size: 16px"><strong>${userLoggedInName}</strong></p>
+                        </div>
+                        <p>${text}</p>
+                      </div>
+                      <div class=""></div>
+                    </div>
+                    <div
+                      class="comment-lks"
+                      style="
+                        font-size: 14px;
+                        font-weight: bold;
+                        padding-left: 60px;
+                        color: rgb(120, 121, 122);
+                      "
+                    >
+                      <p>
+                        <span>Like</span
+                        ><span
+                          class="dot"
+                          style="
+                            color: rgb(138, 141, 145);
+                            position: relative;
+                            top: -3px;
+                            text-decoration: none;
+                            cursor: text;
+                          "
+                        >
+                          .
+                        </span>
+                        <span>Reply</span
+                        ><span
+                          class="dot"
+                          style="
+                            color: rgb(138, 141, 145);
+                            position: relative;
+                            top: -3px;
+                            text-decoration: none;
+                            cursor: text;
+                          "
+                        >
+                          .
+                        </span>
+                        <span>Share</span
+                        ><span
+                          class="dot"
+                          style="
+                            color: rgb(138, 141, 145);
+                            position: relative;
+                            top: -3px;
+                            text-decoration: none;
+                            cursor: text;
+                          "
+                        >
+                          .
+                        </span>
+                        <span>Just now</span>
+                      </p>
+                    </div>
+                  </div>
+            `;
+            }
+
+            window.addEventListener("load", function () {
+                comment_inputs.forEach((input) => {
+                    input.addEventListener("change", (e) => {
+                        makeComment(input.value, input.dataset.cbid);
+                        input.value = "";
+                    });
+                });
+            });
+        </script>
+
+        <!-- post -->
+         <script>
+    function toggleFileInput() {
+        var fileInputContainer = document.getElementById("fileInputContainer");
+        var videoContainer = document.getElementById("fileVideo");
+
+        // Close video container if it's open
+        if (videoContainer.style.display === "block") {
+            videoContainer.style.display = "none";
+        }
+
+        // Toggle file input container
+        fileInputContainer.style.display = fileInputContainer.style.display === "none" ? "block" : "none";
+    }
+</script>
+    <script>
+    function toggleVideo() {
+        
+        var fileInputContainer = document.getElementById("fileInputContainer");
+        var videoContainer = document.getElementById("fileVideo");
+
+        // Close file input container if it's open
+        if (fileInputContainer.style.display === "block") {
+            fileInputContainer.style.display = "none";
+        }
+        // Toggle video container
+        videoContainer.style.display = videoContainer.style.display === "none" ? "block" : "none";
+    }
+</script>
+    <script>
+    function closeFileInputContainer() {
+        document.getElementById('fileInputContainer').style.display = 'none';
+    }
+</script>
+<script>
+    function closeVideo() {
+        document.getElementById('fileVideo').style.display = 'none';
+    }
+</script>
+    </body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot-SilkRoadApplication<SilkRoad>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.example.SilkRoad.SilkRoadApplication",
+      "projectName": "SilkRoad",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}
